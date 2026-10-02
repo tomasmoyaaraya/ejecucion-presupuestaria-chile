@@ -1,0 +1,141 @@
+table Medidas
+
+	measure 'Año en Curso' = CALCULATE(MAX(Hechos[año]), REMOVEFILTERS())
+		formatString: 0
+		displayFolder: 1 Corte
+
+	measure 'Mes de Corte' =
+			VAR a = [Año en Curso]
+			RETURN CALCULATE(MAX(Hechos[mes]), REMOVEFILTERS(), Hechos[año] = a)
+		formatString: 0
+		displayFolder: 1 Corte
+
+	measure 'Vigente al Corte' =
+			VAR a = [Año en Curso]
+			VAR c = [Mes de Corte]
+			RETURN CALCULATE(SUM(Hechos[ley_vigente]), REMOVEFILTERS(Meses), REMOVEFILTERS(Ejercicio), Hechos[año] = a, Hechos[mes] = c)
+		formatString: \$#,0" MM"
+		displayFolder: 2 Ejecución
+
+	measure 'Ley Inicial' =
+			VAR a = [Año en Curso]
+			VAR c = [Mes de Corte]
+			RETURN CALCULATE(SUM(Hechos[ley_inicial]), REMOVEFILTERS(Meses), REMOVEFILTERS(Ejercicio), Hechos[año] = a, Hechos[mes] = c)
+		formatString: \$#,0" MM"
+		displayFolder: 2 Ejecución
+
+	measure 'Ejecutado al Corte' =
+			VAR a = [Año en Curso]
+			VAR c = [Mes de Corte]
+			RETURN CALCULATE(SUM(Hechos[ejec_acum]), REMOVEFILTERS(Meses), REMOVEFILTERS(Ejercicio), Hechos[año] = a, Hechos[mes] = c)
+		formatString: \$#,0" MM"
+		displayFolder: 2 Ejecución
+
+	measure 'Vigente (bn)' = DIVIDE([Vigente al Corte], 1e6)
+		formatString: \$#,0.0" bn"
+		displayFolder: 2 Ejecución
+
+	measure '% Ejecutado' = DIVIDE([Ejecutado al Corte], [Vigente al Corte])
+		formatString: 0.0%
+		displayFolder: 2 Ejecución
+
+	measure 'Modificación vs Ley Inicial %' = DIVIDE([Vigente al Corte], [Ley Inicial]) - 1
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: 2 Ejecución
+
+	measure 'Curva Año en Curso %' =
+			VAR a = [Año en Curso]
+			VAR c = [Mes de Corte]
+			VAR m = MAX(Meses[mes])
+			VAR vig = CALCULATE(SUM(Hechos[ley_vigente]), REMOVEFILTERS(Meses), REMOVEFILTERS(Ejercicio), Hechos[año] = a, Hechos[mes] = c)
+			RETURN IF(m <= c, DIVIDE(CALCULATE(SUM(Hechos[ejec_acum]), REMOVEFILTERS(Ejercicio), Hechos[año] = a), vig))
+		formatString: 0.0%
+		displayFolder: 3 Curva
+
+	measure 'Curva Mediana Años Anteriores %' =
+			VAR a = [Año en Curso]
+			VAR c = [Mes de Corte]
+			VAR t = ADDCOLUMNS(
+			    FILTER(ALL(Ejercicio[año]), Ejercicio[año] < a && NOT Ejercicio[año] IN {2020, 2021}),
+			    "@p", VAR y = Ejercicio[año] RETURN DIVIDE(
+			        CALCULATE(SUM(Hechos[ejec_acum]), REMOVEFILTERS(Ejercicio), Hechos[año] = y),
+			        CALCULATE(SUM(Hechos[ley_vigente]), REMOVEFILTERS(Ejercicio), REMOVEFILTERS(Meses), Hechos[año] = y, Hechos[mes] = c)))
+			RETURN MEDIANX(t, [@p])
+		formatString: 0.0%
+		displayFolder: 3 Curva
+
+	measure 'Curva Proyección %' =
+			VAR c = [Mes de Corte]
+			VAR m = MAX(Meses[mes])
+			VAR e = SUM(Proyeccion[ejec_corte])
+			VAR p = SUM(Proyeccion[proy_patron])
+			VAR v = SUM(Proyeccion[vig_corte])
+			RETURN IF(m >= c, DIVIDE(e + (p - e) * (m - c) / (12 - c), v))
+		formatString: 0.0%
+		displayFolder: 3 Curva
+
+	measure 'Cierre Proyectado %' = DIVIDE(SUM(Proyeccion[proy_patron]), SUM(Proyeccion[vig_corte]))
+		formatString: 0.0%
+		displayFolder: 4 Proyección
+
+	measure 'Instituciones' = COUNTROWS(Proyeccion)
+		formatString: #,0
+		displayFolder: 4 Proyección
+
+	measure 'Instituciones en Alerta' = COUNTROWS(Alertas)
+		formatString: #,0
+		displayFolder: 4 Proyección
+
+	measure 'Monto en Riesgo' = SUM(Alertas[sin_ejecutar_proy])
+		formatString: \$#,0" MM"
+		displayFolder: 4 Proyección
+
+	measure 'Monto en Riesgo (bn)' = DIVIDE([Monto en Riesgo], 1e6)
+		formatString: \$#,0.0" bn"
+		displayFolder: 4 Proyección
+
+	measure '% Ejecutado Alerta' = DIVIDE(SUM(Alertas[ejec_corte]), SUM(Alertas[vig_corte]))
+		formatString: 0.0%
+		displayFolder: 4 Proyección
+
+	measure 'Cierre Proyectado Alerta %' = DIVIDE(SUMX(Alertas, Alertas[pct_proy] * Alertas[vig_corte]), SUM(Alertas[vig_corte]))
+		formatString: 0.0%
+		displayFolder: 4 Proyección
+
+	measure 'Color Cierre' = IF([Cierre Proyectado %] < 0.9, "#D6453D", "#1A1A1A")
+		displayFolder: 4 Proyección
+
+	measure 'Precisión' = DIVIDE(CALCULATE(SUM(Validacion[aciertos]), Validacion[atipico] = FALSE()), CALCULATE(SUM(Validacion[alertas]), Validacion[atipico] = FALSE()))
+		formatString: 0.0%
+		displayFolder: 5 Validación
+
+	measure 'Cobertura' = DIVIDE(CALCULATE(SUM(Validacion[aciertos]), Validacion[atipico] = FALSE()), CALCULATE(SUM(Validacion[cerraron_bajo]), Validacion[atipico] = FALSE()))
+		formatString: 0.0%
+		displayFolder: 5 Validación
+
+	measure 'Error Típico (pp)' = CALCULATE(MEDIAN(Validacion[error_pp]), Validacion[atipico] = FALSE())
+		formatString: 0.0
+		displayFolder: 5 Validación
+
+	measure '% Bajo 90% (oficial)' = SUM(Brecha[oficial])
+		formatString: 0.0%
+		displayFolder: 5 Validación
+
+	measure '% Bajo 90% (al corte)' = SUM(Brecha[corte])
+		formatString: 0.0%
+		displayFolder: 5 Validación
+
+	column x
+		dataType: string
+		isHidden
+		summarizeBy: none
+		sourceColumn: x
+
+	partition Medidas = m
+		mode: import
+		source =
+				let
+				    Vacia = #table(type table [x = text], {})
+				in
+				    Vacia
+

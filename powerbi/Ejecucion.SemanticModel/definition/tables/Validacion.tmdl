@@ -1,0 +1,76 @@
+table Validacion
+
+	column año
+		dataType: int64
+		formatString: 0
+		summarizeBy: none
+		sourceColumn: año
+
+	column instituciones
+		dataType: int64
+		formatString: #,0
+		summarizeBy: sum
+		sourceColumn: instituciones
+
+	column cerraron_bajo
+		dataType: int64
+		formatString: #,0
+		summarizeBy: sum
+		sourceColumn: cerraron_bajo
+
+	column alertas
+		dataType: int64
+		formatString: #,0
+		summarizeBy: sum
+		sourceColumn: alertas
+
+	column aciertos
+		dataType: int64
+		formatString: #,0
+		summarizeBy: sum
+		sourceColumn: aciertos
+
+	column falsas
+		dataType: int64
+		formatString: #,0
+		summarizeBy: sum
+		sourceColumn: falsas
+
+	column no_detectadas
+		dataType: int64
+		formatString: #,0
+		summarizeBy: sum
+		sourceColumn: no_detectadas
+
+	column error_pp
+		dataType: double
+		formatString: 0.0
+		summarizeBy: sum
+		sourceColumn: error_pp
+
+	column error_lineal_pp
+		dataType: double
+		formatString: 0.0
+		summarizeBy: sum
+		sourceColumn: error_lineal_pp
+
+	column atipico
+		dataType: boolean
+		summarizeBy: none
+		sourceColumn: atipico
+
+	column pandemia
+		dataType: string
+		summarizeBy: none
+		sourceColumn: pandemia
+
+	partition Validacion = m
+		mode: import
+		source =
+				let
+				    Origen = Csv.Document(File.Contents(CarpetaDatos & "\validacion.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Encabezados = Table.PromoteHeaders(Origen, [PromoteAllScalars=true]),
+				    Tipos = Table.TransformColumnTypes(Encabezados, {{"año", Int64.Type}, {"instituciones", Int64.Type}, {"cerraron_bajo", Int64.Type}, {"alertas", Int64.Type}, {"aciertos", Int64.Type}, {"falsas", Int64.Type}, {"no_detectadas", Int64.Type}, {"error_pp", type number}, {"error_lineal_pp", type number}, {"atipico", type logical}, {"pandemia", type text}}, "en-US")
+				in
+				    Tipos
+

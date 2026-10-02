@@ -1,0 +1,33 @@
+{
+  "año": 2026,
+  "corte": 8,
+  "mes_corte": "ago",
+  "avance_nacional_pct": 66.2,
+  "proyeccion_nacional_pct": 103.8,
+  "alertas": 38,
+  "sin_ejecutar_MM": 1778846.0,
+  "validacion": {
+    "años": [
+      2019,
+      2022,
+      2023,
+      2024,
+      2025
+    ],
+    "aciertos": 99,
+    "alertas": 182,
+    "casos": 131,
+    "falsas": 83,
+    "precision": 54.4,
+    "cobertura": 75.6,
+    "error_patron_pp": 4.0,
+    "error_lineal_pp": 7.3,
+    "regla_simple": {
+      "alertas": 153,
+      "aciertos": 75,
+      "precision": 49.0,
+      "cobertura": 57.3
+    }
+  },
+  "instituciones": 253
+}

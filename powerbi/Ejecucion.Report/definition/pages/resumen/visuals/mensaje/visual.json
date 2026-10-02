@@ -1,0 +1,37 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
+  "name": "mensaje",
+  "position": {
+    "x": 20,
+    "y": 72,
+    "z": 0,
+    "width": 1240,
+    "height": 70
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "A agosto, 38 instituciones van camino a dejar sin gastar $1,8 billones de su presupuesto vigente. Las de mayor monto: Gobiernos Regionales, Subsecretaría de Redes Asistenciales, Dirección General de Concesiones de Obras Públicas.",
+                    "textStyle": {
+                      "fontSize": "13pt",
+                      "fontWeight": "bold",
+                      "color": "#1A1A1A",
+                      "fontFamily": "Segoe UI"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

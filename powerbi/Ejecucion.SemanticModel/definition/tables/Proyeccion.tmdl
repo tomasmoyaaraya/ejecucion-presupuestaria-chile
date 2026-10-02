@@ -1,0 +1,60 @@
+table Proyeccion
+
+	column inst_id
+		dataType: int64
+		formatString: 0
+		isHidden
+		summarizeBy: none
+		sourceColumn: inst_id
+
+	column vig_corte
+		dataType: double
+		formatString: #,0
+		summarizeBy: sum
+		sourceColumn: vig_corte
+
+	column ejec_corte
+		dataType: double
+		formatString: #,0
+		summarizeBy: sum
+		sourceColumn: ejec_corte
+
+	column proy_patron
+		dataType: double
+		formatString: #,0
+		summarizeBy: sum
+		sourceColumn: proy_patron
+
+	column avance_tipico
+		dataType: double
+		formatString: 0.0%
+		summarizeBy: none
+		sourceColumn: avance_tipico
+
+	column pct_proy
+		dataType: double
+		formatString: 0.0%
+		summarizeBy: none
+		sourceColumn: pct_proy
+
+	column alerta
+		dataType: boolean
+		summarizeBy: none
+		sourceColumn: alerta
+
+	column sin_ejecutar_proy
+		dataType: double
+		formatString: #,0
+		summarizeBy: sum
+		sourceColumn: sin_ejecutar_proy
+
+	partition Proyeccion = m
+		mode: import
+		source =
+				let
+				    Origen = Csv.Document(File.Contents(CarpetaDatos & "\proyeccion.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Encabezados = Table.PromoteHeaders(Origen, [PromoteAllScalars=true]),
+				    Tipos = Table.TransformColumnTypes(Encabezados, {{"inst_id", Int64.Type}, {"vig_corte", type number}, {"ejec_corte", type number}, {"proy_patron", type number}, {"avance_tipico", type number}, {"pct_proy", type number}, {"alerta", type logical}, {"sin_ejecutar_proy", type number}}, "en-US")
+				in
+				    Tipos
+

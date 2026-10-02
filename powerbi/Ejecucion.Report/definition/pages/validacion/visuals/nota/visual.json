@@ -1,0 +1,37 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
+  "name": "nota",
+  "position": {
+    "x": 20,
+    "y": 610,
+    "z": 0,
+    "width": 1240,
+    "height": 80
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Regla simple de comparación (alertar a quien ya cerró bajo 90% el año anterior): detecta menos casos y con menor precisión. 2020 y 2021 (pandemia) se muestran pero no entran en el resumen. La cifra oficial (~99% de ejecución) se mide contra el presupuesto final, que se recorta después del corte a quienes no alcanzan a gastar.",
+                    "textStyle": {
+                      "fontSize": "10pt",
+                      "fontWeight": "normal",
+                      "color": "#6B6B6B",
+                      "fontFamily": "Segoe UI"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

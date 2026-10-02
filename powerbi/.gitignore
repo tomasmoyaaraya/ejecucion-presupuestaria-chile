@@ -1,0 +1,4 @@
+**/.pbi/localSettings.json
+**/.pbi/cache.abf
+# Ruta local de los datos: la crea generar_pbip.py en cada computador (no se publica)
+**/definition/expressions.tmdl

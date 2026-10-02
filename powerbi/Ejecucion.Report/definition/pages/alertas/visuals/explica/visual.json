@@ -1,0 +1,37 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
+  "name": "explica",
+  "position": {
+    "x": 20,
+    "y": 70,
+    "z": 0,
+    "width": 960,
+    "height": 50
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Cierre proyectado = ejecutado al corte ÷ avance típico de cada institución a esa fecha en sus últimos 3 años. Alerta si queda bajo 90% del presupuesto vigente al corte. Años previos: % ejecutado al cierre de los 3 años anteriores.",
+                    "textStyle": {
+                      "fontSize": "10pt",
+                      "fontWeight": "normal",
+                      "color": "#6B6B6B",
+                      "fontFamily": "Segoe UI"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

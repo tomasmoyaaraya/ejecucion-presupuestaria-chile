@@ -1,0 +1,17 @@
+table Ejercicio
+
+	column año
+		dataType: int64
+		formatString: 0
+		summarizeBy: none
+		sourceColumn: año
+
+	partition Ejercicio = m
+		mode: import
+		source =
+				let
+				    Fuente = Table.FromList({2017..2030}, Splitter.SplitByNothing(), {"año"}),
+				    Tipos = Table.TransformColumnTypes(Fuente, {{"año", Int64.Type}})
+				in
+				    Tipos
+

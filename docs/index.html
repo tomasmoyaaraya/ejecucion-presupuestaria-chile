@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ejecución Presupuestaria · Chile</title>
+<meta name="description" content="Seguimiento de la ejecución presupuestaria del Gobierno Central de Chile con datos abiertos de la DIPRES: curva de gasto, proyección de cierre por institución validada con años pasados y alertas de subejecución.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="data.js"></script>
+<style>
+/* Notación IBCS: año en curso = sólido oscuro · historia = gris · proyección = discontinua/rayada
+   El color se usa SOLO para desviaciones: verde = favorable, rojo = desfavorable. */
+:root{
+  --bg:#ffffff; --panel:#ffffff; --ink:#1a1a1a; --muted:#6b6b6b; --line:#e6e6e6; --soft:#f3f3f3;
+  --ac:#3a3a3a; --py:#b5b5b5; --band:rgba(150,150,150,.18); --pos:#3b9a52; --neg:#d6453d; --accent:#1a1a1a;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#121212; --panel:#121212; --ink:#ececec; --muted:#9a9a9a; --line:#2c2c2c; --soft:#1d1d1d;
+    --ac:#d9d9d9; --py:#6a6a6a; --band:rgba(200,200,200,.12); --pos:#5cc274; --neg:#ff6b61; --accent:#ececec;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:13.5px/1.45 Inter,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1280px;margin:0 auto;padding:28px 20px 56px}
+.top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:16px;border-bottom:2px solid var(--accent);padding-bottom:14px}
+.who{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-weight:600}
+h1{font-size:24px;margin:2px 0 4px;letter-spacing:-.015em;font-weight:700}
+.when{font-size:13px;color:var(--muted)}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-top:8px}
+.legend i{display:inline-block;width:16px;height:10px;margin-right:5px;vertical-align:-1px}
+.lg-ac{background:var(--ac)} .lg-band{background:var(--band);border-top:1.5px dashed var(--py)}
+.lg-fc{background:repeating-linear-gradient(135deg,var(--ac) 0 2px,transparent 2px 5px);border:1px solid var(--ac)}
+.filtro label{display:block;font-size:12px;color:var(--muted);font-weight:500;margin-bottom:4px}
+select{font:inherit;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:7px 10px;max-width:320px;width:100%}
+.mensaje{font-size:19px;font-weight:600;letter-spacing:-.01em;line-height:1.35;margin:20px 0 18px;max-width:1040px}
+.mensaje small{display:block;font-size:12.5px;font-weight:400;color:var(--muted);margin-top:6px;letter-spacing:0}
+.kpis{display:grid;grid-template-columns:repeat(5,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-bottom:26px}
+.kpi{padding:14px 16px;border-right:1px solid var(--line);min-width:0}
+.kpi:last-child{border-right:0}
+.kpi .lbl{font-size:12px;color:var(--muted);font-weight:500}
+.kpi .val{font-size:24px;font-weight:700;letter-spacing:-.02em;margin:3px 0 6px;font-variant-numeric:tabular-nums}
+.kpi .d{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.pos{color:var(--pos)} .neg{color:var(--neg)}
+.g2{display:grid;grid-template-columns:1fr 1.1fr;gap:32px;margin-bottom:32px}
+.g2b{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-bottom:32px}
+.g2>*,.g2b>*{min-width:0}
+h2{font-size:14px;margin:0;font-weight:700}
+.sub{font-size:12px;color:var(--muted);margin:2px 0 10px}
+.chart{position:relative;height:300px}
+.chart.mid{height:240px}
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+th{font-size:11.5px;color:var(--muted);font-weight:600;text-align:right;padding:6px 8px;border-bottom:1.5px solid var(--accent);white-space:nowrap;position:sticky;top:0;background:var(--bg)}
+th:first-child,td:first-child{text-align:left}
+td{padding:6px 8px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+td.wrapc{white-space:normal;min-width:180px}
+td small{display:block;color:var(--muted);font-size:11px}
+tr.tot td{font-weight:700;border-top:1.5px solid var(--accent)}
+tr.click{cursor:pointer} tr.click:hover td{background:var(--soft)} tr.sel td{background:var(--soft);font-weight:600}
+td.barcell{width:110px;padding:4px 8px}
+.hbar{position:relative;height:12px;background:transparent}
+.hbar i{position:absolute;left:0;top:0;height:12px;background:var(--neg)}
+.vbar{position:relative;height:12px}
+.vbar::before{content:"";position:absolute;left:50%;top:-4px;bottom:-4px;border-left:1px solid var(--muted)}
+.vbar i{position:absolute;top:0;height:12px}
+.hist{display:flex;gap:4px;justify-content:flex-end}
+.hist span{font-size:10.5px;border:1px solid var(--line);border-radius:3px;padding:0 4px;color:var(--muted)}
+.hist span.b{color:var(--neg);border-color:currentColor}
+.scroll{overflow-x:auto}
+.maxh{max-height:430px;overflow:auto}
+.big{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:4px 0 14px}
+.big div{border-top:2px solid var(--accent);padding-top:8px}
+.big b{display:block;font-size:22px;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.big span{font-size:12px;color:var(--muted)}
+.method{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;border-top:1px solid var(--line);padding-top:18px}
+.method p{margin:4px 0 0;color:var(--muted);font-size:12.5px}
+footer{color:var(--muted);font-size:12px;margin-top:22px}
+footer a{color:var(--ink)}
+@media (max-width:1050px){.kpis{grid-template-columns:repeat(3,1fr)}.kpi:nth-child(3){border-right:0}.g2,.g2b,.method{grid-template-columns:1fr}}
+@media (max-width:600px){.kpis{grid-template-columns:repeat(2,1fr)}.kpi{border-right:0;border-bottom:1px solid var(--line)}.kpi .val{font-size:20px}
+  .mensaje{font-size:16px}.wrap{padding:20px 16px 44px}h1{font-size:20px}.big{grid-template-columns:1fr}select{max-width:none}.filtro{width:100%}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div>
+      <div class="who">Gobierno Central de Chile · datos abiertos de la DIPRES</div>
+      <h1 id="h1"></h1>
+      <div class="when" id="when"></div>
+      <div class="legend"><span><i class="lg-ac"></i>Año en curso</span><span><i class="lg-band"></i>Rango y mediana de años anteriores</span>
+        <span><i class="lg-fc"></i>Proyección</span><span><b class="pos">■</b> favorable · <b class="neg">■</b> desfavorable</span></div>
+    </div>
+    <div class="filtro"><label for="fMin">Ministerio</label><select id="fMin"></select></div>
+  </div>
+
+  <p class="mensaje" id="mensaje"></p>
+
+  <section class="kpis" id="kpis"></section>
+
+  <section class="g2">
+    <div>
+      <h2>Curva de ejecución del gasto</h2>
+      <div class="sub" id="curvaSub"></div>
+      <div class="chart"><canvas id="cCurva"></canvas></div>
+      <p class="sub" style="margin-top:8px">Puede superar 100%: después del corte el presupuesto suele aumentar por decretos de modificación.</p>
+    </div>
+    <div>
+      <h2>Instituciones que van camino a no ejecutar su presupuesto</h2>
+      <div class="sub" id="alSub"></div>
+      <div class="scroll maxh"><table id="tAlertas"></table></div>
+    </div>
+  </section>
+
+  <section style="margin-bottom:32px">
+    <h2>Ejecución por ministerio</h2>
+    <div class="sub" id="minSub"></div>
+    <div class="scroll maxh"><table id="tMin"></table></div>
+  </section>
+
+  <section class="g2b">
+    <div>
+      <h2>¿La proyección acierta?</h2>
+      <div class="sub" id="valSub"></div>
+      <div class="big" id="big"></div>
+      <div class="scroll"><table id="tVal"></table></div>
+    </div>
+    <div>
+      <h2>El 99% oficial esconde la subejecución</h2>
+      <div class="sub" id="brSub"></div>
+      <div class="chart mid"><canvas id="cBrecha"></canvas></div>
+      <h2 style="margin-top:22px">Quién gasta en diciembre</h2>
+      <div class="sub">% del gasto anual ejecutado en diciembre · mediana de los últimos 3 años · instituciones con presupuesto sobre $20.000 MM</div>
+      <div class="scroll"><table id="tDic"></table></div>
+    </div>
+  </section>
+
+  <section class="method">
+    <div><h2>Datos</h2><p>Ejecución presupuestaria y Ley de Presupuestos inicial y vigente, mensuales, del Gobierno Central (DIPRES vía datos.gob.cl), 2017 a la fecha. Gasto de cada servicio sin operaciones financieras ni Tesoro Público, en millones de pesos nominales.</p></div>
+    <div><h2>Proyección</h2><p>Cierre = ejecutado al corte ÷ avance típico de esa institución al mismo mes en sus últimos 3 años. Alerta si el cierre proyectado queda bajo 90% del presupuesto vigente al corte.</p></div>
+    <div><h2>Validación</h2><p>Cada año pasado se proyectó usando solo los años anteriores, y se comparó con lo que realmente pasó. 2020 y 2021 (pandemia) se informan pero no entran en el resumen.</p></div>
+  </section>
+
+  <footer>Proyecto de portafolio de <b>Tomás Moya Araya</b> · código y metodología en
+    <a href="https://github.com/tomasmoyaaraya/ejecucion-presupuestaria-chile">GitHub</a> · datos públicos de la Dirección de Presupuestos; el análisis y las proyecciones son propios, no oficiales.</footer>
+</div>
+
+<script>
+const D = window.DATA;
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const nf0 = new Intl.NumberFormat("es-CL", {maximumFractionDigits: 0});
+const nf1 = new Intl.NumberFormat("es-CL", {minimumFractionDigits: 1, maximumFractionDigits: 1});
+const MESES = ["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"];
+const sg = (v, f = nf1) => (v > 0 ? "+" : v < 0 ? "−" : "±") + f.format(Math.abs(v));
+const bn = v => "$" + nf1.format(v / 1e6) + " bn";          // MM$ -> billones
+const mm = v => v >= 1e6 ? bn(v) : "$" + nf0.format(v) + " MM";
+let grupo = "Todos";
+const charts = {};
+
+function hatch(color) {
+  const c = document.createElement("canvas"); c.width = c.height = 6;
+  const x = c.getContext("2d"); x.strokeStyle = color; x.lineWidth = 1.4;
+  x.beginPath(); x.moveTo(0, 6); x.lineTo(6, 0); x.stroke();
+  return x.createPattern(c, "repeat");
+}
+function dibujar(id, cfg) { if (charts[id]) charts[id].destroy(); charts[id] = new Chart(document.getElementById(id), cfg); }
+const ejes = (extra = {}) => ({
+  responsive: true, maintainAspectRatio: false, animation: {duration: 200},
+  plugins: {legend: {display: false}, tooltip: {mode: "index", intersect: false}},
+  scales: {x: {grid: {display: false}, border: {color: css("--muted")}, ticks: {color: css("--muted"), maxRotation: 0, autoSkip: true, font: {size: 11}}},
+           y: {grid: {color: css("--line")}, border: {display: false}, ticks: {color: css("--muted"), font: {size: 11}, callback: v => nf0.format(v) + "%"}}},
+  ...extra
+});
+
+// ---------- encabezado ----------
+document.getElementById("h1").textContent = `Ejecución presupuestaria ${D.año}`;
+document.getElementById("when").innerHTML = `Datos a <b>${D.mes_corte_largo} de ${D.año}</b> · millones de pesos (MM$) y billones (bn) · ${D.kpis.Todos.n_inst} servicios públicos`;
+const rv = D.validacion.resumen;
+document.getElementById("mensaje").innerHTML = D.titular +
+  `<small>En años pasados, esta proyección detectó ${nf0.format(rv.cobertura)}% de las instituciones que terminaron bajo 90%, y ${nf0.format(rv.precision)}% de sus alertas resultaron correctas. Es una señal para revisar, no una certeza.</small>`;
+const sel = document.getElementById("fMin");
+sel.innerHTML = Object.keys(D.grupos).map(g => `<option>${g}</option>`).join("");
+sel.onchange = () => { grupo = sel.value; render(); };
+
+// ---------- KPIs ----------
+function kpis() {
+  const k = D.kpis[grupo];
+  const dIni = (k.vigente / k.inicial - 1) * 100, dHist = k.pct_hist == null ? null : k.pct_ejec - k.pct_hist;
+  const cel = (lbl, val, d) => `<div class="kpi"><div class="lbl">${lbl}</div><div class="val">${val}</div><div class="d">${d}</div></div>`;
+  document.getElementById("kpis").innerHTML =
+    cel("Presupuesto vigente", mm(k.vigente), `${sg(dIni)}% vs Ley inicial`) +
+    cel(`Ejecutado a ${D.mes_corte}`, nf1.format(k.pct_ejec) + "%",
+        dHist == null ? "sin años anteriores comparables"
+          : `<span class="${dHist >= 0 ? "pos" : "neg"}">${sg(dHist)} pp</span> vs lo típico (${nf1.format(k.pct_hist)}%)`) +
+    cel("Cierre proyectado", nf1.format(k.pct_proy) + "%", `del presupuesto vigente a ${D.mes_corte}`) +
+    cel("Instituciones en alerta", `<span class="${k.n_alertas ? "neg" : ""}">${k.n_alertas}</span>`, `de ${k.n_inst} · cierre proyectado bajo ${D.umbral}%`) +
+    cel("Monto en riesgo", `<span class="${k.sin_ejecutar ? "neg" : ""}">${mm(k.sin_ejecutar)}</span>`, "presupuesto que quedaría sin gastar");
+}
+
+// ---------- curva ----------
+function curva() {
+  const c = D.curvas[grupo], ac = css("--ac"), py = css("--py");
+  const a = c.años_banda;
+  document.getElementById("curvaSub").textContent =
+    `Gasto acumulado como % del presupuesto vigente a ${D.mes_corte} de cada año · banda: ${a[0]}–${a[a.length - 1]} sin 2020 y 2021`;
+  dibujar("cCurva", {type: "line", data: {labels: MESES, datasets: [
+    {label: "Máximo", data: c.max, borderWidth: 0, pointRadius: 0, fill: "+1", backgroundColor: css("--band")},
+    {label: "Mínimo", data: c.min, borderWidth: 0, pointRadius: 0, fill: false},
+    {label: "Mediana años anteriores", data: c.mediana, borderColor: py, borderDash: [4, 3], borderWidth: 1.5, pointRadius: 0},
+    {label: `Proyección ${D.año}`, data: c.proyeccion, borderColor: ac, borderDash: [6, 4], borderWidth: 2, pointRadius: 0},
+    {label: `${D.año}`, data: c.actual, borderColor: ac, borderWidth: 2.5, pointRadius: 2.5, pointBackgroundColor: ac},
+  ]}, options: ejes({plugins: {legend: {display: false}, tooltip: {mode: "index", intersect: false,
+      callbacks: {label: t => t.raw == null ? null : `${t.dataset.label}: ${nf1.format(t.raw)}%`}}}})});
+}
+
+// ---------- alertas ----------
+function alertas() {
+  const p = D.grupos[grupo];
+  const al = D.alertas.filter(x => p === null || String(x.partida) === p);
+  const max = Math.max(1, ...al.map(x => x.sin_ejecutar));
+  document.getElementById("alSub").textContent = al.length
+    ? `${al.length} instituciones con cierre proyectado bajo ${D.umbral}% · ordenadas por monto que quedaría sin gastar · últimos años: % ejecutado del presupuesto que tenía en ${D.mes_corte}`
+    : `Ninguna institución de este ministerio proyecta cerrar bajo ${D.umbral}%.`;
+  document.getElementById("tAlertas").innerHTML = !al.length ? "" :
+    `<tr><th>Institución</th><th>Ejecutado</th><th>Proyectado</th><th>Sin gastar</th><th></th><th>Años previos</th></tr>` +
+    al.map(x => `<tr><td class="wrapc">${x.institucion}<small>${x.ministerio}</small></td>
+      <td>${nf1.format(x.pct_ejec)}%</td><td class="neg">${nf1.format(x.pct_proy)}%</td><td>${mm(x.sin_ejecutar)}</td>
+      <td class="barcell"><div class="hbar"><i style="width:${x.sin_ejecutar / max * 100}%"></i></div></td>
+      <td><div class="hist">${x.historia.length ? x.historia.slice(-3).map(([a, v]) => `<span class="${v < D.umbral ? "b" : ""}" title="${a}">${nf0.format(v)}%</span>`).join("") : '<span title="Sin historia comparable">nueva</span>'}</div></td></tr>`).join("");
+}
+
+// ---------- ministerios ----------
+function ministerios() {
+  const t = D.ministerios, max = Math.max(...t.map(x => Math.abs(x.pct_ejec - (x.pct_hist ?? x.pct_ejec))));
+  document.getElementById("minSub").textContent =
+    `Ejecutado a ${D.mes_corte} vs lo típico de ese ministerio a la misma fecha (años normales) · haz clic en una fila para filtrar`;
+  document.getElementById("tMin").innerHTML =
+    `<tr><th>Ministerio</th><th>Vigente</th><th>Ejecutado</th><th>Típico</th><th>Δ vs típico</th><th></th><th>Cierre proy.</th><th>Alertas</th><th>Monto en riesgo</th></tr>` +
+    t.map(x => {
+      const d = x.pct_hist == null ? null : x.pct_ejec - x.pct_hist;
+      const w = d == null ? 0 : Math.min(Math.abs(d) / max * 50, 50), col = d >= 0 ? "var(--pos)" : "var(--neg)";
+      const bar = d == null ? "" : `<div class="vbar"><i style="background:${col};width:${w}%;${d >= 0 ? "left:50%" : `left:${50 - w}%`}"></i></div>`;
+      return `<tr class="click ${grupo === x.ministerio ? "sel" : ""}" data-g="${x.ministerio}"><td>${x.ministerio}</td><td>${mm(x.vigente)}</td>
+        <td>${nf1.format(x.pct_ejec)}%</td><td>${x.pct_hist == null ? "—" : nf1.format(x.pct_hist) + "%"}</td>
+        <td class="${d == null ? "" : d >= 0 ? "pos" : "neg"}">${d == null ? "—" : sg(d) + " pp"}</td><td class="barcell">${bar}</td>
+        <td>${nf1.format(x.pct_proy)}%</td><td class="${x.alertas ? "neg" : ""}">${x.alertas || ""}</td><td>${x.sin_ejecutar ? mm(x.sin_ejecutar) : ""}</td></tr>`;
+    }).join("");
+  document.getElementById("tMin").onclick = e => {
+    const tr = e.target.closest("tr[data-g]"); if (!tr) return;
+    grupo = grupo === tr.dataset.g ? "Todos" : tr.dataset.g; sel.value = grupo; render();
+  };
+}
+
+// ---------- validación ----------
+function validacion() {
+  const rs = rv.regla_simple;
+  document.getElementById("valSub").textContent =
+    `Cada año se proyectó en ${D.mes_corte} usando solo los años anteriores y se comparó con el cierre real. Resumen de ${rv.años.join(", ")} (sin pandemia).`;
+  document.getElementById("big").innerHTML =
+    `<div><b>${nf0.format(rv.cobertura)}%</b><span>de los casos detectados (${rv.aciertos} de ${rv.casos}). Regla simple: ${nf0.format(rs.cobertura)}%</span></div>
+     <div><b>${nf0.format(rv.precision)}%</b><span>de las alertas fueron correctas (${rv.aciertos} de ${rv.alertas}). Regla simple: ${nf0.format(rs.precision)}%</span></div>
+     <div><b>${nf1.format(rv.error_patron_pp)} pp</b><span>error típico del cierre proyectado. Proyección lineal: ${nf1.format(rv.error_lineal_pp)} pp</span></div>`;
+  document.getElementById("tVal").innerHTML =
+    `<tr><th>Año</th><th>Bajo ${D.umbral}%</th><th>Alertas</th><th>Aciertos</th><th>Falsas</th><th>No detect.</th><th>Error pp</th></tr>` +
+    D.validacion.años.map(v => `<tr style="${v["Atípico"] ? "color:var(--muted)" : ""}"><td>${v["Año"]}${v["Atípico"] ? " *" : ""}</td>
+      <td>${v["Cerraron bajo 90%"]}</td><td>${v.Alertas}</td><td>${v.Aciertos}</td><td>${v["Falsas alarmas"]}</td>
+      <td>${v["No detectadas"]}</td><td>${nf1.format(v["Error patrón (pp)"])}</td></tr>`).join("") +
+    `<tr><td colspan="7" style="text-align:left;color:var(--muted);font-size:11.5px;border:0">* Pandemia: se informa pero no entra en el resumen. Regla simple = alertar a quien ya cerró bajo ${D.umbral}% el año anterior.</td></tr>`;
+}
+
+// ---------- brecha y diciembre ----------
+function brecha() {
+  document.getElementById("brSub").textContent =
+    `% de instituciones que cerraron bajo ${D.umbral}%, según contra qué presupuesto se mida`;
+  const ac = css("--ac"), py = css("--py");
+  dibujar("cBrecha", {type: "bar", data: {labels: D.brecha.map(b => b.año), datasets: [
+    {label: "Vs presupuesto vigente final (cifra oficial)", data: D.brecha.map(b => b.oficial), backgroundColor: "transparent", borderColor: ac, borderWidth: 1.5},
+    {label: `Vs presupuesto que tenía en ${D.mes_corte}`, data: D.brecha.map(b => b.corte), backgroundColor: ac},
+  ]}, options: ejes({plugins: {legend: {display: true, position: "bottom", labels: {color: css("--muted"), boxWidth: 12, font: {size: 11}}},
+      tooltip: {mode: "index", intersect: false, callbacks: {label: t => `${t.dataset.label}: ${nf1.format(t.raw)}%`}}}})});
+  document.getElementById("tDic").innerHTML = `<tr><th>Institución</th><th>Presupuesto</th><th>Diciembre</th></tr>` +
+    D.diciembre.slice(0, 8).map(x => `<tr><td class="wrapc">${x.institucion}<small>${x.ministerio}</small></td><td>${mm(x.presupuesto)}</td><td>${nf1.format(x.peso)}%</td></tr>`).join("");
+}
+
+function render() { kpis(); curva(); alertas(); ministerios(); }
+render(); validacion(); brecha();
+</script>
+</body>
+</html>

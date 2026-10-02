@@ -1,0 +1,36 @@
+table Meses
+
+	column mes
+		dataType: int64
+		formatString: 0
+		isHidden
+		summarizeBy: none
+		sourceColumn: mes
+
+	column nombre_mes
+		dataType: string
+		sortByColumn: mes
+		summarizeBy: none
+		sourceColumn: nombre_mes
+
+	partition Meses = m
+		mode: import
+		source =
+				let
+				    Meses = #table(type table [mes = Int64.Type, nombre_mes = text], {
+				        {1, "ene"},
+				        {2, "feb"},
+				        {3, "mar"},
+				        {4, "abr"},
+				        {5, "may"},
+				        {6, "jun"},
+				        {7, "jul"},
+				        {8, "ago"},
+				        {9, "sep"},
+				        {10, "oct"},
+				        {11, "nov"},
+				        {12, "dic"}
+				    })
+				in
+				    Meses
+

@@ -1,0 +1,48 @@
+table Alertas
+
+	column inst_id
+		dataType: int64
+		formatString: 0
+		isHidden
+		summarizeBy: none
+		sourceColumn: inst_id
+
+	column vig_corte
+		dataType: double
+		formatString: #,0
+		summarizeBy: sum
+		sourceColumn: vig_corte
+
+	column ejec_corte
+		dataType: double
+		formatString: #,0
+		summarizeBy: sum
+		sourceColumn: ejec_corte
+
+	column pct_proy
+		dataType: double
+		formatString: 0.0%
+		summarizeBy: none
+		sourceColumn: pct_proy
+
+	column sin_ejecutar_proy
+		dataType: double
+		formatString: #,0
+		summarizeBy: sum
+		sourceColumn: sin_ejecutar_proy
+
+	column años_previos
+		dataType: string
+		summarizeBy: none
+		sourceColumn: años_previos
+
+	partition Alertas = m
+		mode: import
+		source =
+				let
+				    Origen = Csv.Document(File.Contents(CarpetaDatos & "\alertas.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Encabezados = Table.PromoteHeaders(Origen, [PromoteAllScalars=true]),
+				    Tipos = Table.TransformColumnTypes(Encabezados, {{"inst_id", Int64.Type}, {"vig_corte", type number}, {"ejec_corte", type number}, {"pct_proy", type number}, {"sin_ejecutar_proy", type number}, {"años_previos", type text}}, "en-US")
+				in
+				    Tipos
+

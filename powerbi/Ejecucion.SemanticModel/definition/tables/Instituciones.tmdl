@@ -1,0 +1,48 @@
+table Instituciones
+
+	column inst_id
+		dataType: int64
+		formatString: 0
+		isHidden
+		summarizeBy: none
+		sourceColumn: inst_id
+
+	column partida
+		dataType: int64
+		formatString: 0
+		isHidden
+		summarizeBy: none
+		sourceColumn: partida
+
+	column capitulo
+		dataType: int64
+		formatString: 0
+		isHidden
+		summarizeBy: none
+		sourceColumn: capitulo
+
+	column ministerio
+		dataType: string
+		summarizeBy: none
+		sourceColumn: ministerio
+
+	column institucion
+		dataType: string
+		summarizeBy: none
+		sourceColumn: institucion
+
+	column ministerio_corto
+		dataType: string
+		summarizeBy: none
+		sourceColumn: ministerio_corto
+
+	partition Instituciones = m
+		mode: import
+		source =
+				let
+				    Origen = Csv.Document(File.Contents(CarpetaDatos & "\instituciones.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Encabezados = Table.PromoteHeaders(Origen, [PromoteAllScalars=true]),
+				    Tipos = Table.TransformColumnTypes(Encabezados, {{"inst_id", Int64.Type}, {"partida", Int64.Type}, {"capitulo", Int64.Type}, {"ministerio", type text}, {"institucion", type text}, {"ministerio_corto", type text}}, "en-US")
+				in
+				    Tipos
+

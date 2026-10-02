@@ -1,0 +1,299 @@
+inst_id,partida,capitulo,ministerio,institucion,ministerio_corto
+8008,8,8,Ministerio de Hacienda,Superintendencia de Valores y Seguros,Hacienda
+9005,9,5,Ministerio de Educación,"Dirección de Bibliotecas, Archivos y Museos",Educación
+9016,9,16,Ministerio de Educación,Consejo Nacional de la Cultura y las Artes,Educación
+6002,6,2,Ministerio de Relaciones Exteriores,Dirección General de Relaciones Económicas Internacionales,Relaciones Exteriores
+8011,8,11,Ministerio de Hacienda,Superintendencia de Bancos e Instituciones Financieras,Hacienda
+9008,9,8,Ministerio de Educación,Comisión Nacional de Investigación Científica y Tecnológica,Educación
+5061,5,61,Ministerio del Interior y Seguridad Pública,Gobierno Regional Región de Tarapacá,Interior y Seguridad Pública
+5062,5,62,Ministerio del Interior y Seguridad Pública,Gobierno Regional Región de Antofagasta,Interior y Seguridad Pública
+5063,5,63,Ministerio del Interior y Seguridad Pública,Gobierno Regional Región de Atacama,Interior y Seguridad Pública
+5064,5,64,Ministerio del Interior y Seguridad Pública,Gobierno Regional Región de Coquimbo,Interior y Seguridad Pública
+5065,5,65,Ministerio del Interior y Seguridad Pública,Gobierno Regional Región de Valparaíso,Interior y Seguridad Pública
+5066,5,66,Ministerio del Interior y Seguridad Pública,Gobierno Regional Región del Libertador General Bernardo O'higgins,Interior y Seguridad Pública
+5067,5,67,Ministerio del Interior y Seguridad Pública,Gobierno Regional Región del Maule,Interior y Seguridad Pública
+5068,5,68,Ministerio del Interior y Seguridad Pública,Gobierno Regional Región del Biobío,Interior y Seguridad Pública
+5069,5,69,Ministerio del Interior y Seguridad Pública,Gobierno Regional Región de la Araucanía,Interior y Seguridad Pública
+5070,5,70,Ministerio del Interior y Seguridad Pública,Gobierno Regional Región de los Lagos,Interior y Seguridad Pública
+5071,5,71,Ministerio del Interior y Seguridad Pública,Gobierno Regional Región de Aysén del General Carlos Ibáñez del Campo,Interior y Seguridad Pública
+5072,5,72,Ministerio del Interior y Seguridad Pública,Gobierno Regional Región de Magallanes y de la Antártica Chilena,Interior y Seguridad Pública
+5073,5,73,Ministerio del Interior y Seguridad Pública,Gobierno Regional Región Metropolitana de Santiago,Interior y Seguridad Pública
+5074,5,74,Ministerio del Interior y Seguridad Pública,Gobierno Regional Región de los Ríos,Interior y Seguridad Pública
+5075,5,75,Ministerio del Interior y Seguridad Pública,Gobierno Regional Región de Arica y Parinacota,Interior y Seguridad Pública
+5076,5,76,Ministerio del Interior y Seguridad Pública,Gobierno Regional Región de Ñuble,Interior y Seguridad Pública
+5034,5,34,Ministerio del Interior y Seguridad Pública,Financiamiento Gobiernos Regionales,Interior y Seguridad Pública
+16050,16,50,Ministerio de Salud,Hospital Padre Alberto Hurtado,Salud
+5008,5,8,Ministerio del Interior y Seguridad Pública,Subsecretaría de Prevención del Delito,Interior y Seguridad Pública
+5031,5,31,Ministerio del Interior y Seguridad Pública,Carabineros de Chile,Interior y Seguridad Pública
+5032,5,32,Ministerio del Interior y Seguridad Pública,Hospital de Carabineros,Interior y Seguridad Pública
+5033,5,33,Ministerio del Interior y Seguridad Pública,Policía de Investigaciones de Chile,Interior y Seguridad Pública
+5036,5,36,Ministerio del Interior y Seguridad Pública,Agencia Nacional de Ciberseguridad,Interior y Seguridad Pública
+9061,9,61,Ministerio de Educación,Servicio Local de Educación Manquehue,Educación
+10007,10,7,Ministerio de Justicia y Derechos Humanos,Servicio Nacional de Menores,Justicia y Derechos Humanos
+1001,1,1,Presidencia de la República,Presidencia de la República,Presidencia de la República
+2001,2,1,Congreso Nacional,Senado,Congreso Nacional
+2002,2,2,Congreso Nacional,Cámara de Diputados,Congreso Nacional
+2003,2,3,Congreso Nacional,Biblioteca del Congreso,Congreso Nacional
+2004,2,4,Congreso Nacional,Consejo Resolutivo de Asignaciones Parlamentarias,Congreso Nacional
+3001,3,1,Poder Judicial,Poder Judicial,Poder Judicial
+3003,3,3,Poder Judicial,Corporación Administrativa del Poder Judicial,Poder Judicial
+3004,3,4,Poder Judicial,Academia Judicial,Poder Judicial
+4001,4,1,Contraloría General de la República,Contraloría General de la República,Contraloría General de la República
+5002,5,2,Ministerio del Interior,Servicio de Gobierno Interior,Interior
+5004,5,4,Ministerio del Interior,Servicio Nacional de Prevención y Respuesta Ante Desastres,Interior
+5005,5,5,Ministerio del Interior,Subsecretaría de Desarrollo Regional y Administrativo,Interior
+5007,5,7,Ministerio del Interior,Agencia Nacional de Inteligencia,Interior
+5009,5,9,Ministerio del Interior,Servicio Nacional para Prevención y Rehabilitación Consumo de Drogas y Alcohol,Interior
+5010,5,10,Ministerio del Interior,Subsecretaría del Interior,Interior
+5035,5,35,Ministerio del Interior,Servicio Nacional de Migraciones,Interior
+6001,6,1,Ministerio de Relaciones Exteriores,Secretaría y Administración General y Servicio Exterior,Relaciones Exteriores
+6003,6,3,Ministerio de Relaciones Exteriores,Dirección de Fronteras y Límites del Estado,Relaciones Exteriores
+6004,6,4,Ministerio de Relaciones Exteriores,Instituto Antártico Chileno,Relaciones Exteriores
+6005,6,5,Ministerio de Relaciones Exteriores,Agencia Chilena de Cooperación Internacional para el Desarrollo,Relaciones Exteriores
+6006,6,6,Ministerio de Relaciones Exteriores,Subsecretaría de Relaciones Económicas Internacionales,Relaciones Exteriores
+6007,6,7,Ministerio de Relaciones Exteriores,Dirección General de Promoción de Exportaciones,Relaciones Exteriores
+7001,7,1,"Ministerio de Economía, Fomento y Turismo",Subsecretaría de Economía y Empresas de Menor Tamaño,"Economía, Fomento y Turismo"
+7002,7,2,"Ministerio de Economía, Fomento y Turismo",Servicio Nacional del Consumidor,"Economía, Fomento y Turismo"
+7003,7,3,"Ministerio de Economía, Fomento y Turismo",Subsecretaría de Pesca y Acuicultura,"Economía, Fomento y Turismo"
+7004,7,4,"Ministerio de Economía, Fomento y Turismo",Servicio Nacional de Pesca y Acuicultura,"Economía, Fomento y Turismo"
+7006,7,6,"Ministerio de Economía, Fomento y Turismo",Corporación de Fomento de la Producción,"Economía, Fomento y Turismo"
+7007,7,7,"Ministerio de Economía, Fomento y Turismo",Instituto Nacional de Estadísticas,"Economía, Fomento y Turismo"
+7008,7,8,"Ministerio de Economía, Fomento y Turismo",Fiscalía Nacional Económica,"Economía, Fomento y Turismo"
+7009,7,9,"Ministerio de Economía, Fomento y Turismo",Servicio Nacional de Turismo,"Economía, Fomento y Turismo"
+7016,7,16,"Ministerio de Economía, Fomento y Turismo",Servicio de Cooperación Técnica,"Economía, Fomento y Turismo"
+7019,7,19,"Ministerio de Economía, Fomento y Turismo",Comité Innova Chile,"Economía, Fomento y Turismo"
+7021,7,21,"Ministerio de Economía, Fomento y Turismo",Agencia de Promoción de la Inversión Extranjera,"Economía, Fomento y Turismo"
+7023,7,23,"Ministerio de Economía, Fomento y Turismo",Instituto Nacional de Propiedad Industrial,"Economía, Fomento y Turismo"
+7024,7,24,"Ministerio de Economía, Fomento y Turismo",Subsecretaría de Turismo,"Economía, Fomento y Turismo"
+7025,7,25,"Ministerio de Economía, Fomento y Turismo",Superintendencia de Insolvencia y Reemprendimiento,"Economía, Fomento y Turismo"
+7026,7,26,"Ministerio de Economía, Fomento y Turismo",Instituto Nacional Desarrollo Sustentable Pesca Artesanal y Acuicultura,"Economía, Fomento y Turismo"
+8001,8,1,Ministerio de Hacienda,Secretaría y Administración General,Hacienda
+8002,8,2,Ministerio de Hacienda,Dirección de Presupuestos,Hacienda
+8003,8,3,Ministerio de Hacienda,Servicio de Impuestos Internos,Hacienda
+8004,8,4,Ministerio de Hacienda,Servicio Nacional de Aduanas,Hacienda
+8005,8,5,Ministerio de Hacienda,Servicio de Tesorerías,Hacienda
+8007,8,7,Ministerio de Hacienda,Dirección de Compras y Contratación Pública,Hacienda
+8015,8,15,Ministerio de Hacienda,Dirección Nacional del Servicio Civil,Hacienda
+8016,8,16,Ministerio de Hacienda,Unidad de Análisis Financiero,Hacienda
+8017,8,17,Ministerio de Hacienda,Superintendencia de Casinos de Juego,Hacienda
+8030,8,30,Ministerio de Hacienda,Consejo de Defensa del Estado,Hacienda
+8031,8,31,Ministerio de Hacienda,Comisión para el Mercado Financiero,Hacienda
+8033,8,33,Ministerio de Hacienda,Defensoría del Contribuyente,Hacienda
+9001,9,1,Ministerio de Educación,Subsecretaría de Educación,Educación
+9002,9,2,Ministerio de Educación,Superintendencia de Educación,Educación
+9003,9,3,Ministerio de Educación,Agencia de Calidad de la Educación,Educación
+9004,9,4,Ministerio de Educación,Subsecretaría de Educación Parvularia,Educación
+9009,9,9,Ministerio de Educación,Junta Nacional de Auxilio Escolar y Becas,Educación
+9011,9,11,Ministerio de Educación,Junta Nacional de Jardines Infantiles,Educación
+9013,9,13,Ministerio de Educación,Consejo de Rectores,Educación
+9015,9,15,Ministerio de Educación,Consejo Nacional de Educación,Educación
+9017,9,17,Ministerio de Educación,Dirección de Educación Pública,Educación
+9018,9,18,Ministerio de Educación,Servicio Local de Educación Barrancas,Educación
+9019,9,19,Ministerio de Educación,Servicio Local de Educación Puerto Cordillera,Educación
+9021,9,21,Ministerio de Educación,Servicio Local de Educación Huasco,Educación
+9022,9,22,Ministerio de Educación,Servicio Local de Educación Costa Araucanía,Educación
+9023,9,23,Ministerio de Educación,Servicio Local de Educación Chinchorro,Educación
+9024,9,24,Ministerio de Educación,Servicio Local de Educación Gabriela Mistral,Educación
+9025,9,25,Ministerio de Educación,Servicio Local de Educación Andalién Sur,Educación
+9026,9,26,Ministerio de Educación,Servicio Local de Educación Atacama,Educación
+9027,9,27,Ministerio de Educación,Servicio Local de Educación Valparaíso,Educación
+9028,9,28,Ministerio de Educación,Servicio Local de Educación Colchagua,Educación
+9029,9,29,Ministerio de Educación,Servicio Local de Educación Llanquihue,Educación
+9030,9,30,Ministerio de Educación,Servicio Local de Educación Iquique,Educación
+9031,9,31,Ministerio de Educación,Servicio Local de Educación Licancabur,Educación
+9032,9,32,Ministerio de Educación,Servicio Local de Educación Maule Costa,Educación
+9033,9,33,Ministerio de Educación,Servicio Local de Educación Punilla Cordillera,Educación
+9034,9,34,Ministerio de Educación,Servicio Local de Educación Aysén,Educación
+9035,9,35,Ministerio de Educación,Servicio Local de Educación Magallanes,Educación
+9036,9,36,Ministerio de Educación,Servicio Local de Educación Tamarugal,Educación
+9037,9,37,Ministerio de Educación,Servicio Local de Educación Elqui,Educación
+9038,9,38,Ministerio de Educación,Servicio Local de Educación Costa Central,Educación
+9039,9,39,Ministerio de Educación,Servicio Local de Educación Marga Marga,Educación
+9040,9,40,Ministerio de Educación,Servicio Local de Educación los Libertadores,Educación
+9041,9,41,Ministerio de Educación,Servicio Local de Educación Santa Rosa,Educación
+9042,9,42,Ministerio de Educación,Servicio Local de Educación Santa Corina,Educación
+9043,9,43,Ministerio de Educación,Servicio Local de Educación del Pino,Educación
+9044,9,44,Ministerio de Educación,Servicio Local de Educación Andalién Costa,Educación
+9045,9,45,Ministerio de Educación,Servicio Local de Educación Valdivia,Educación
+9046,9,46,Ministerio de Educación,Servicio Local de Educación Antofagasta,Educación
+9047,9,47,Ministerio de Educación,Servicio Local de Educación Aconcagua,Educación
+9048,9,48,Ministerio de Educación,Servicio Local de Educación los Andes,Educación
+9049,9,49,Ministerio de Educación,Servicio Local de Educación Petorca,Educación
+9050,9,50,Ministerio de Educación,Servicio Local de Educación los Parques,Educación
+9051,9,51,Ministerio de Educación,Servicio Local de Educación Santiago Centro,Educación
+9052,9,52,Ministerio de Educación,Servicio Local de Educación los Álamos,Educación
+9053,9,53,Ministerio de Educación,Servicio Local de Educación Valle Cachapoal,Educación
+9054,9,54,Ministerio de Educación,Servicio Local de Educación Puelche,Educación
+9055,9,55,Ministerio de Educación,Servicio Local de Educación Valle Diguillín,Educación
+9056,9,56,Ministerio de Educación,Servicio Local de Educación Chiloé,Educación
+9057,9,57,Ministerio de Educación,Servicio Local de Educación Litoral,Educación
+9058,9,58,Ministerio de Educación,Servicio Local de Educación Hanga Roa,Educación
+9059,9,59,Ministerio de Educación,Servicio Local de Educación la Quebrada,Educación
+9060,9,60,Ministerio de Educación,Servicio Local de Educación Talagante,Educación
+9062,9,62,Ministerio de Educación,Servicio Local de Educación Costa Colchagua,Educación
+9063,9,63,Ministerio de Educación,Servicio Local de Educación los Cerezos,Educación
+9064,9,64,Ministerio de Educación,Servicio Local de Educación Maule Valle,Educación
+9065,9,65,Ministerio de Educación,Servicio Local de Educación los Copihues,Educación
+9066,9,66,Ministerio de Educación,Servicio Local de Educación Reloncaví,Educación
+9067,9,67,Ministerio de Educación,Servicio Local de Educación Choapa,Educación
+9068,9,68,Ministerio de Educación,Servicio Local de Educación Limarí,Educación
+9069,9,69,Ministerio de Educación,Servicio Local de Educación Chacabuco,Educación
+9070,9,70,Ministerio de Educación,Servicio Local de Educación los Viñedos,Educación
+9071,9,71,Ministerio de Educación,Servicio Local de Educación Maipo Sur,Educación
+9072,9,72,Ministerio de Educación,Servicio Local de Educación Mapocho,Educación
+9073,9,73,Ministerio de Educación,Servicio Local de Educación Cachapoal Norte,Educación
+9074,9,74,Ministerio de Educación,Servicio Local de Educación Cachapoal Costa,Educación
+9075,9,75,Ministerio de Educación,Servicio Local de Educación Arauco Norte,Educación
+9076,9,76,Ministerio de Educación,Servicio Local de Educación Cautín Norte,Educación
+9077,9,77,Ministerio de Educación,Servicio Local de Educación Cautín Sur,Educación
+9090,9,90,Ministerio de Educación,Subsecretaría de Educación Superior,Educación
+9091,9,91,Ministerio de Educación,Superintendencia de Educación Superior,Educación
+9095,9,95,Ministerio de Educación,Transferencias a Servicios Locales de Educación Pública,Educación
+10001,10,1,Ministerio de Justicia y Derechos Humanos,Secretaría y Administración General,Justicia y Derechos Humanos
+10002,10,2,Ministerio de Justicia y Derechos Humanos,Servicio de Registro Civil e Identificación,Justicia y Derechos Humanos
+10003,10,3,Ministerio de Justicia y Derechos Humanos,Servicio Médico Legal,Justicia y Derechos Humanos
+10004,10,4,Ministerio de Justicia y Derechos Humanos,Gendarmería de Chile,Justicia y Derechos Humanos
+10006,10,6,Ministerio de Justicia y Derechos Humanos,Subsecretaría de Derechos Humanos,Justicia y Derechos Humanos
+10009,10,9,Ministerio de Justicia y Derechos Humanos,Defensoría Penal Pública,Justicia y Derechos Humanos
+10010,10,10,Ministerio de Justicia y Derechos Humanos,Servicio Nacional de Reinserción Social Juvenil,Justicia y Derechos Humanos
+11001,11,1,Ministerio de Defensa Nacional,Ejército de Chile,Defensa Nacional
+11003,11,3,Ministerio de Defensa Nacional,Organismos de Salud del Ejército,Defensa Nacional
+11004,11,4,Ministerio de Defensa Nacional,Organismos de Industria Militar,Defensa Nacional
+11005,11,5,Ministerio de Defensa Nacional,Armada de Chile,Defensa Nacional
+11007,11,7,Ministerio de Defensa Nacional,Dirección General del Territorio Marítimo,Defensa Nacional
+11008,11,8,Ministerio de Defensa Nacional,Dirección de Sanidad,Defensa Nacional
+11009,11,9,Ministerio de Defensa Nacional,Fuerza Aérea de Chile,Defensa Nacional
+11011,11,11,Ministerio de Defensa Nacional,Organismos de Salud de la Fach,Defensa Nacional
+11018,11,18,Ministerio de Defensa Nacional,Dirección General de Movilización Nacional,Defensa Nacional
+11019,11,19,Ministerio de Defensa Nacional,Instituto Geográfico Militar,Defensa Nacional
+11020,11,20,Ministerio de Defensa Nacional,Servicio Hidrográfico y Oceanográfico de la Armada de Chile,Defensa Nacional
+11021,11,21,Ministerio de Defensa Nacional,Dirección General de Aeronáutica Civil,Defensa Nacional
+11022,11,22,Ministerio de Defensa Nacional,Servicio Aerofotogramétrico de la Fach,Defensa Nacional
+11023,11,23,Ministerio de Defensa Nacional,Subsecretaría para las Fuerzas Armadas,Defensa Nacional
+11024,11,24,Ministerio de Defensa Nacional,Subsecretaría de Defensa,Defensa Nacional
+11025,11,25,Ministerio de Defensa Nacional,Estado Mayor Conjunto,Defensa Nacional
+12001,12,1,Ministerio de Obras Públicas,Secretaría y Administración General,Obras Públicas
+12002,12,2,Ministerio de Obras Públicas,Dirección General de Obras Públicas,Obras Públicas
+12003,12,3,Ministerio de Obras Públicas,Dirección General de Concesiones de Obras Públicas,Obras Públicas
+12004,12,4,Ministerio de Obras Públicas,Dirección General de Aguas,Obras Públicas
+12005,12,5,Ministerio de Obras Públicas,Instituto Nacional de Hidráulica,Obras Públicas
+12007,12,7,Ministerio de Obras Públicas,Superintendencia de Servicios Sanitarios,Obras Públicas
+13001,13,1,Ministerio de Agricultura,Subsecretaría de Agricultura,Agricultura
+13002,13,2,Ministerio de Agricultura,Oficina de Estudios y Políticas Agrarias,Agricultura
+13003,13,3,Ministerio de Agricultura,Instituto de Desarrollo Agropecuario,Agricultura
+13004,13,4,Ministerio de Agricultura,Servicio Agrícola y Ganadero,Agricultura
+13005,13,5,Ministerio de Agricultura,Corporación Nacional Forestal,Agricultura
+13006,13,6,Ministerio de Agricultura,Comisión Nacional de Riego,Agricultura
+14001,14,1,Ministerio de Bienes Nacionales,Subsecretaría de Bienes Nacionales,Bienes Nacionales
+15001,15,1,Ministerio del Trabajo y Previsión Social,Subsecretaría del Trabajo,Trabajo y Previsión Social
+15002,15,2,Ministerio del Trabajo y Previsión Social,Dirección del Trabajo,Trabajo y Previsión Social
+15003,15,3,Ministerio del Trabajo y Previsión Social,Subsecretaría de Previsión Social,Trabajo y Previsión Social
+15004,15,4,Ministerio del Trabajo y Previsión Social,Dirección General de Crédito Prendario,Trabajo y Previsión Social
+15005,15,5,Ministerio del Trabajo y Previsión Social,Servicio Nacional de Capacitación y Empleo,Trabajo y Previsión Social
+15006,15,6,Ministerio del Trabajo y Previsión Social,Superintendencia de Seguridad Social,Trabajo y Previsión Social
+15007,15,7,Ministerio del Trabajo y Previsión Social,Superintendencia de Pensiones,Trabajo y Previsión Social
+15009,15,9,Ministerio del Trabajo y Previsión Social,Instituto de Previsión Social,Trabajo y Previsión Social
+15010,15,10,Ministerio del Trabajo y Previsión Social,Instituto de Seguridad Laboral,Trabajo y Previsión Social
+15011,15,11,Ministerio del Trabajo y Previsión Social,Chile Valora,Trabajo y Previsión Social
+15013,15,13,Ministerio del Trabajo y Previsión Social,Caja de Previsión de la Defensa Nacional,Trabajo y Previsión Social
+15014,15,14,Ministerio del Trabajo y Previsión Social,Dirección de Previsión de Carabineros de Chile,Trabajo y Previsión Social
+16002,16,2,Ministerio de Salud,Fondo Nacional de Salud,Salud
+16004,16,4,Ministerio de Salud,Instituto de Salud Pública de Chile,Salud
+16005,16,5,Ministerio de Salud,Central de Abastecimiento del Sistema Nacional de Servicios de Salud,Salud
+16009,16,9,Ministerio de Salud,Subsecretaría de Salud Pública,Salud
+16010,16,10,Ministerio de Salud,Subsecretaría de Redes Asistenciales,Salud
+16011,16,11,Ministerio de Salud,Superintendencia de Salud,Salud
+16020,16,20,Ministerio de Salud,Servicio de Salud Arica y Parinacota,Salud
+16021,16,21,Ministerio de Salud,Servicio de Salud Tarapacá,Salud
+16022,16,22,Ministerio de Salud,Servicio de Salud Antofagasta,Salud
+16023,16,23,Ministerio de Salud,Servicio de Salud Atacama,Salud
+16024,16,24,Ministerio de Salud,Servicio de Salud Coquimbo,Salud
+16025,16,25,Ministerio de Salud,Servicio de Salud Valparaíso - San Antonio,Salud
+16026,16,26,Ministerio de Salud,Servicio de Salud Viña del Mar - Quillota,Salud
+16027,16,27,Ministerio de Salud,Servicio de Salud Aconcagua,Salud
+16028,16,28,Ministerio de Salud,Servicio de Salud O'higgins,Salud
+16029,16,29,Ministerio de Salud,Servicio de Salud Maule,Salud
+16030,16,30,Ministerio de Salud,Servicio de Salud Ñuble,Salud
+16031,16,31,Ministerio de Salud,Servicio de Salud Concepción,Salud
+16032,16,32,Ministerio de Salud,Servicio de Salud Talcahuano,Salud
+16033,16,33,Ministerio de Salud,Servicio de Salud Biobío,Salud
+16034,16,34,Ministerio de Salud,Servicio de Salud Arauco,Salud
+16035,16,35,Ministerio de Salud,Servicio de Salud Araucanía Norte,Salud
+16036,16,36,Ministerio de Salud,Servicio de Salud Araucanía Sur,Salud
+16037,16,37,Ministerio de Salud,Servicio de Salud los Ríos,Salud
+16038,16,38,Ministerio de Salud,Servicio de Salud Osorno,Salud
+16039,16,39,Ministerio de Salud,Servicio de Salud del Reloncaví,Salud
+16040,16,40,Ministerio de Salud,Servicio de Salud Aysén,Salud
+16041,16,41,Ministerio de Salud,Servicio de Salud Magallanes,Salud
+16042,16,42,Ministerio de Salud,Servicio de Salud Metropolitano Oriente,Salud
+16043,16,43,Ministerio de Salud,Servicio de Salud Metropolitano Central,Salud
+16044,16,44,Ministerio de Salud,Servicio de Salud Metropolitano Sur,Salud
+16045,16,45,Ministerio de Salud,Servicio de Salud Metropolitano Norte,Salud
+16046,16,46,Ministerio de Salud,Servicio de Salud Metropolitano Occidente,Salud
+16047,16,47,Ministerio de Salud,Servicio de Salud Metropolitano Sur-oriente,Salud
+16049,16,49,Ministerio de Salud,Programa Contingencias Operacionales,Salud
+16051,16,51,Ministerio de Salud,Centro de Referencia de Salud de Maipú,Salud
+16052,16,52,Ministerio de Salud,Centro de Referencia de Salud de Peñalolén Cordillera Oriente,Salud
+16053,16,53,Ministerio de Salud,Servicio de Salud Chiloé,Salud
+17001,17,1,Ministerio de Minería,Secretaría y Administración General,Minería
+17002,17,2,Ministerio de Minería,Comisión Chilena del Cobre,Minería
+17003,17,3,Ministerio de Minería,Servicio Nacional de Geología y Minería,Minería
+18001,18,1,Ministerio de Vivienda y Urbanismo,Subsecretaría de Vivienda y Urbanismo,Vivienda y Urbanismo
+18002,18,2,Ministerio de Vivienda y Urbanismo,Parque Metropolitano,Vivienda y Urbanismo
+18021,18,21,Ministerio de Vivienda y Urbanismo,Serviu Región de Tarapacá,Vivienda y Urbanismo
+18022,18,22,Ministerio de Vivienda y Urbanismo,Serviu Región de Antofagasta,Vivienda y Urbanismo
+18023,18,23,Ministerio de Vivienda y Urbanismo,Serviu Región de Atacama,Vivienda y Urbanismo
+18024,18,24,Ministerio de Vivienda y Urbanismo,Serviu Región de Coquimbo,Vivienda y Urbanismo
+18025,18,25,Ministerio de Vivienda y Urbanismo,Serviu Región de Valparaíso,Vivienda y Urbanismo
+18026,18,26,Ministerio de Vivienda y Urbanismo,Serviu Región del Libertador General Bernardo O'higgins,Vivienda y Urbanismo
+18027,18,27,Ministerio de Vivienda y Urbanismo,Serviu Región del Maule,Vivienda y Urbanismo
+18028,18,28,Ministerio de Vivienda y Urbanismo,Serviu Región del Biobío,Vivienda y Urbanismo
+18029,18,29,Ministerio de Vivienda y Urbanismo,Serviu Región de la Araucanía,Vivienda y Urbanismo
+18030,18,30,Ministerio de Vivienda y Urbanismo,Serviu Región de los Lagos,Vivienda y Urbanismo
+18031,18,31,Ministerio de Vivienda y Urbanismo,Serviu Región de Aysén del General Carlos Ibáñez del Campo,Vivienda y Urbanismo
+18032,18,32,Ministerio de Vivienda y Urbanismo,Serviu Región de Magallanes y de la Antártica Chilena,Vivienda y Urbanismo
+18033,18,33,Ministerio de Vivienda y Urbanismo,Serviu Región Metropolitana de Santiago,Vivienda y Urbanismo
+18034,18,34,Ministerio de Vivienda y Urbanismo,Serviu Región de los Ríos,Vivienda y Urbanismo
+18035,18,35,Ministerio de Vivienda y Urbanismo,Serviu Región de Arica y Parinacota,Vivienda y Urbanismo
+18036,18,36,Ministerio de Vivienda y Urbanismo,Serviu Región de Ñuble,Vivienda y Urbanismo
+19001,19,1,Ministerio de Transportes y Telecomunicaciones,Secretaría y Administración General de Transportes,Transportes y Telecomunicaciones
+19002,19,2,Ministerio de Transportes y Telecomunicaciones,Subsecretaría de Telecomunicaciones,Transportes y Telecomunicaciones
+19003,19,3,Ministerio de Transportes y Telecomunicaciones,Junta de Aeronáutica Civil,Transportes y Telecomunicaciones
+20001,20,1,Ministerio Secretaría General de Gobierno,Secretaría General de Gobierno,Secretaría General de Gobierno
+20002,20,2,Ministerio Secretaría General de Gobierno,Consejo Nacional de Televisión,Secretaría General de Gobierno
+21001,21,1,Ministerio de Desarrollo Social y Familia,Subsecretaría de Servicios Sociales,Desarrollo Social y Familia
+21002,21,2,Ministerio de Desarrollo Social y Familia,Fondo de Solidaridad e Inversión Social,Desarrollo Social y Familia
+21005,21,5,Ministerio de Desarrollo Social y Familia,Instituto Nacional de la Juventud,Desarrollo Social y Familia
+21006,21,6,Ministerio de Desarrollo Social y Familia,Corporación Nacional de Desarrollo Indígena,Desarrollo Social y Familia
+21007,21,7,Ministerio de Desarrollo Social y Familia,Servicio Nacional de la Discapacidad,Desarrollo Social y Familia
+21008,21,8,Ministerio de Desarrollo Social y Familia,Servicio Nacional del Adulto Mayor,Desarrollo Social y Familia
+21009,21,9,Ministerio de Desarrollo Social y Familia,Subsecretaría de Evaluación Social,Desarrollo Social y Familia
+21010,21,10,Ministerio de Desarrollo Social y Familia,Subsecretaría de la Niñez,Desarrollo Social y Familia
+21011,21,11,Ministerio de Desarrollo Social y Familia,Servicio Nacional de Protección Especializada a la Niñez y Adolescencia,Desarrollo Social y Familia
+22001,22,1,Ministerio Secretaría General de la Presidencia de la República,Secretaría General de la Presidencia de la República,Secretaría General de la Presidencia de la República
+23001,23,1,Ministerio Público,Ministerio Público,Público
+24001,24,1,Ministerio de Energía,Subsecretaría de Energía,Energía
+24002,24,2,Ministerio de Energía,Comisión Nacional de Energía,Energía
+24003,24,3,Ministerio de Energía,Comisión Chilena de Energía Nuclear,Energía
+24004,24,4,Ministerio de Energía,Superintendencia de Electricidad y Combustibles,Energía
+25001,25,1,Ministerio del Medio Ambiente,Subsecretaría del Medio Ambiente,Medio Ambiente
+25002,25,2,Ministerio del Medio Ambiente,Servicio de Evaluación Ambiental,Medio Ambiente
+25003,25,3,Ministerio del Medio Ambiente,Superintendencia del Medio Ambiente,Medio Ambiente
+25004,25,4,Ministerio del Medio Ambiente,Servicio de Biodiversidad y Áreas Protegidas,Medio Ambiente
+26001,26,1,Ministerio del Deporte,Subsecretaría del Deporte,Deporte
+26002,26,2,Ministerio del Deporte,Instituto Nacional de Deportes,Deporte
+27001,27,1,Ministerio de la Mujer y la Equidad de Género,Subsecretaría de la Mujer y la Equidad de Género,Mujer y la Equidad de Género
+27002,27,2,Ministerio de la Mujer y la Equidad de Género,Servicio Nacional de la Mujer y la Equidad de Género,Mujer y la Equidad de Género
+28001,28,1,Servicio Electoral,Servicio Electoral,Servicio Electoral
+29001,29,1,"Ministerio de las Culturas, las Artes y el Patrimonio",Subsecretaría de las Culturas y las Artes,"Culturas, las Artes y el Patrimonio"
+29002,29,2,"Ministerio de las Culturas, las Artes y el Patrimonio",Subsecretaría del Patrimonio Cultural,"Culturas, las Artes y el Patrimonio"
+29003,29,3,"Ministerio de las Culturas, las Artes y el Patrimonio",Servicio Nacional del Patrimonio Cultural,"Culturas, las Artes y el Patrimonio"
+30001,30,1,"Ministerio de Ciencia, Tecnología, Conocimiento e Innovación","Subsecretaría de Ciencia, Tecnología, Conocimiento e Innovación","Ciencia, Tecnología, Conocimiento e Innovación"
+30002,30,2,"Ministerio de Ciencia, Tecnología, Conocimiento e Innovación",Agencia Nacional de Investigación y Desarrollo,"Ciencia, Tecnología, Conocimiento e Innovación"
+31001,31,1,Financiamiento Gobiernos Regionales,Gobiernos Regionales,Gobiernos Regionales
+32001,32,1,Ministerio de Seguridad Pública,Subsecretaría de Seguridad Pública,Seguridad Pública
+32002,32,2,Ministerio de Seguridad Pública,Subsecretaría de Prevención del Delito,Seguridad Pública
+32003,32,3,Ministerio de Seguridad Pública,Carabineros de Chile,Seguridad Pública
+32004,32,4,Ministerio de Seguridad Pública,Hospital de Carabineros,Seguridad Pública
+32005,32,5,Ministerio de Seguridad Pública,Policía de Investigaciones,Seguridad Pública
+32006,32,6,Ministerio de Seguridad Pública,Agencia Nacional de Ciberseguridad,Seguridad Pública

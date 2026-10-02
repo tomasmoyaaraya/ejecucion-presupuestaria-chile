@@ -1,0 +1,19 @@
+model Model
+	culture: es-CL
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: es-CL
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+ref table Hechos
+ref table Instituciones
+ref table Ejercicio
+ref table Meses
+ref table Proyeccion
+ref table Alertas
+ref table Validacion
+ref table Brecha
+ref table Medidas
+
+ref expression CarpetaDatos

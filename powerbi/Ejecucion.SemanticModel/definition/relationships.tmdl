@@ -1,0 +1,20 @@
+relationship r1
+	fromColumn: Hechos.inst_id
+	toColumn: Instituciones.inst_id
+
+relationship r2
+	fromColumn: Hechos.'año'
+	toColumn: Ejercicio.'año'
+
+relationship r3
+	fromColumn: Hechos.mes
+	toColumn: Meses.mes
+
+relationship r4
+	fromColumn: Proyeccion.inst_id
+	toColumn: Instituciones.inst_id
+
+relationship r5
+	fromColumn: Alertas.inst_id
+	toColumn: Instituciones.inst_id
+

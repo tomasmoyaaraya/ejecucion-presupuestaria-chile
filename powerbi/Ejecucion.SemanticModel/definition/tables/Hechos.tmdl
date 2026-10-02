@@ -1,0 +1,57 @@
+table Hechos
+
+	column inst_id
+		dataType: int64
+		formatString: 0
+		isHidden
+		summarizeBy: none
+		sourceColumn: inst_id
+
+	column año
+		dataType: int64
+		formatString: 0
+		isHidden
+		summarizeBy: none
+		sourceColumn: año
+
+	column mes
+		dataType: int64
+		formatString: 0
+		isHidden
+		summarizeBy: none
+		sourceColumn: mes
+
+	column ejec_mes
+		dataType: double
+		formatString: #,0
+		summarizeBy: sum
+		sourceColumn: ejec_mes
+
+	column ejec_acum
+		dataType: double
+		formatString: #,0
+		summarizeBy: sum
+		sourceColumn: ejec_acum
+
+	column ley_inicial
+		dataType: double
+		formatString: #,0
+		summarizeBy: sum
+		sourceColumn: ley_inicial
+
+	column ley_vigente
+		dataType: double
+		formatString: #,0
+		summarizeBy: sum
+		sourceColumn: ley_vigente
+
+	partition Hechos = m
+		mode: import
+		source =
+				let
+				    Origen = Csv.Document(File.Contents(CarpetaDatos & "\hechos.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Encabezados = Table.PromoteHeaders(Origen, [PromoteAllScalars=true]),
+				    Tipos = Table.TransformColumnTypes(Encabezados, {{"inst_id", Int64.Type}, {"año", Int64.Type}, {"mes", Int64.Type}, {"ejec_mes", type number}, {"ejec_acum", type number}, {"ley_inicial", type number}, {"ley_vigente", type number}}, "en-US")
+				in
+				    Tipos
+

@@ -1,0 +1,8 @@
+año,instituciones,cerraron_bajo,alertas,aciertos,falsas,no_detectadas,error_pp,error_lineal_pp,atipico,pandemia
+2019,216,18,34,14,20,4,4.0,9.3,False,
+2020,223,45,45,29,16,16,4.7,8.7,True,Sí
+2021,227,35,52,27,25,8,4.5,8.9,True,Sí
+2022,213,16,35,13,22,3,3.2,9.5,False,
+2023,218,34,42,27,15,7,3.4,7.3,False,
+2024,226,32,29,19,10,13,5.1,6.2,False,
+2025,249,31,42,26,16,5,5.3,6.8,False,

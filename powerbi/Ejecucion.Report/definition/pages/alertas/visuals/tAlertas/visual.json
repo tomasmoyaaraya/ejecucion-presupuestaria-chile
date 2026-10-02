@@ -1,0 +1,266 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
+  "name": "tAlertas",
+  "position": {
+    "x": 20,
+    "y": 130,
+    "z": 0,
+    "width": 900,
+    "height": 580
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Instituciones"
+                    }
+                  },
+                  "Property": "institucion"
+                }
+              },
+              "queryRef": "Instituciones.institucion",
+              "nativeQueryRef": "institucion",
+              "displayName": "Institución"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Alertas"
+                        }
+                      },
+                      "Property": "vig_corte"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(Alertas.vig_corte)",
+              "nativeQueryRef": "Suma de vig_corte",
+              "displayName": "Vigente MM$"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Medidas"
+                    }
+                  },
+                  "Property": "% Ejecutado Alerta"
+                }
+              },
+              "queryRef": "Medidas.% Ejecutado Alerta",
+              "nativeQueryRef": "% Ejecutado Alerta",
+              "displayName": "Ejecutado"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Medidas"
+                    }
+                  },
+                  "Property": "Cierre Proyectado Alerta %"
+                }
+              },
+              "queryRef": "Medidas.Cierre Proyectado Alerta %",
+              "nativeQueryRef": "Cierre Proyectado Alerta %",
+              "displayName": "Cierre proy."
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Alertas"
+                        }
+                      },
+                      "Property": "sin_ejecutar_proy"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(Alertas.sin_ejecutar_proy)",
+              "nativeQueryRef": "Suma de sin_ejecutar_proy",
+              "displayName": "Sin gastar MM$"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Alertas"
+                    }
+                  },
+                  "Property": "años_previos"
+                }
+              },
+              "queryRef": "Alertas.años_previos",
+              "nativeQueryRef": "años_previos",
+              "displayName": "Años previos"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Aggregation": {
+                "Expression": {
+                  "Column": {
+                    "Expression": {
+                      "SourceRef": {
+                        "Entity": "Alertas"
+                      }
+                    },
+                    "Property": "sin_ejecutar_proy"
+                  }
+                },
+                "Function": 0
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "drillFilterOtherVisuals": true,
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Instituciones con cierre proyectado bajo 90% del presupuesto vigente'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "objects": {
+      "grid": [
+        {
+          "properties": {
+            "gridVertical": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "gridHorizontal": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "gridHorizontalColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#E6E6E6'"
+                    }
+                  }
+                }
+              }
+            },
+            "rowPadding": {
+              "expr": {
+                "Literal": {
+                  "Value": "2D"
+                }
+              }
+            },
+            "textSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "8D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "columnHeaders": [
+        {
+          "properties": {
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "8D"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "values": [
+        {
+          "properties": {
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "8D"
+                }
+              }
+            }
+          }
+        },
+        {
+          "properties": {
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#D6453D'"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Medidas.Cierre Proyectado Alerta %"
+          }
+        }
+      ]
+    }
+  }
+}

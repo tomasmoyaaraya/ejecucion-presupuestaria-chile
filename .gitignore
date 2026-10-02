@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.pyc
+
+# Datos descargados y consolidados (se regeneran con descargar.py, ~160 MB)
+datos/crudos/
+datos/ejecucion.csv
+datos/ley.csv
+
+# Base SQLite (se regenera con modelo.py)
+presupuesto.db
+
+# Capturas auxiliares
+resultados/tablero_completo.png
+
+# Configuración local de herramientas
+.claude/
