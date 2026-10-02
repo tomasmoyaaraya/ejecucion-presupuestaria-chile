@@ -3,7 +3,7 @@
 Seguimiento de la ejecución presupuestaria del **Gobierno Central de Chile** con datos **oficiales y públicos** de la
 Dirección de Presupuestos (DIPRES), desde 2017 hasta agosto de 2026: 298 servicios públicos, mes a mes.
 
-**[Ver el tablero web en vivo](https://tomasmoyaaraya.github.io/ejecucion-presupuestaria-chile/)** · [Informe en Excel](resultados/informe_ejecucion.xlsx) · [Proyecto de Power BI](powerbi/)
+**[Ver el tablero web en vivo](https://tomasmoyaaraya.github.io/ejecucion-presupuestaria-chile/)** · [Informe en Excel](resultados/informe_ejecucion.xlsx) · [Proyecto de Power BI](powerbi/) · [Guía para implementarlo en una empresa](GUIA_IMPLEMENTACION.md)
 
 > Los datos son oficiales. El análisis, las proyecciones y las alertas son míos, no de la DIPRES.
 
