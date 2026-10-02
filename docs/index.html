@@ -44,7 +44,7 @@ select{font:inherit;color:var(--ink);background:var(--panel);border:1px solid va
 .kpi .val{font-size:24px;font-weight:700;letter-spacing:-.02em;margin:3px 0 6px;font-variant-numeric:tabular-nums}
 .kpi .d{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
 .pos{color:var(--pos)} .neg{color:var(--neg)}
-.g2{display:grid;grid-template-columns:1fr 1.1fr;gap:32px;margin-bottom:32px}
+.g2{display:grid;grid-template-columns:.8fr 1.4fr;gap:32px;margin-bottom:32px}
 .g2b{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-bottom:32px}
 .g2>*,.g2b>*{min-width:0}
 h2{font-size:14px;margin:0;font-weight:700}
@@ -55,7 +55,7 @@ table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
 th{font-size:11.5px;color:var(--muted);font-weight:600;text-align:right;padding:6px 8px;border-bottom:1.5px solid var(--accent);white-space:nowrap;position:sticky;top:0;background:var(--bg)}
 th:first-child,td:first-child{text-align:left}
 td{padding:6px 8px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
-td.wrapc{white-space:normal;min-width:180px}
+td.wrapc{white-space:normal;min-width:230px}
 td small{display:block;color:var(--muted);font-size:11px}
 tr.tot td{font-weight:700;border-top:1.5px solid var(--accent)}
 tr.click{cursor:pointer} tr.click:hover td{background:var(--soft)} tr.sel td{background:var(--soft);font-weight:600}
@@ -65,6 +65,9 @@ td.barcell{width:110px;padding:4px 8px}
 .vbar{position:relative;height:12px}
 .vbar::before{content:"";position:absolute;left:50%;top:-4px;bottom:-4px;border-left:1px solid var(--muted)}
 .vbar i{position:absolute;top:0;height:12px}
+.pill{display:inline-block;border-radius:3px;padding:1px 7px;font-size:11px;font-weight:600;border:1px solid currentColor;white-space:nowrap}
+.pill.n-mod{color:var(--muted)} .pill.n-alt{color:var(--neg)} .pill.n-muy{color:var(--bg);background:var(--neg);border-color:var(--neg)}
+td.wrapc small.why{color:var(--muted);margin-top:2px}
 .hist{display:flex;gap:4px;justify-content:flex-end}
 .hist span{font-size:10.5px;border:1px solid var(--line);border-radius:3px;padding:0 4px;color:var(--muted)}
 .hist span.b{color:var(--neg);border-color:currentColor}
@@ -122,25 +125,42 @@ footer a{color:var(--ink)}
 
   <section class="g2b">
     <div>
-      <h2>¿La proyección acierta?</h2>
+      <h2>¿El modelo acierta?</h2>
       <div class="sub" id="valSub"></div>
       <div class="big" id="big"></div>
-      <div class="scroll"><table id="tVal"></table></div>
+      <div class="scroll"><table id="tComp"></table></div>
+      <h2 style="margin-top:22px">¿Más alertas, más casos encontrados?</h2>
+      <div class="sub" id="curSub"></div>
+      <div class="scroll"><table id="tCur"></table></div>
     </div>
     <div>
-      <h2>El 99% oficial esconde la subejecución</h2>
+      <h2>Cuánto confiar en cada nivel de riesgo</h2>
+      <div class="sub" id="calSub"></div>
+      <div class="scroll"><table id="tCal"></table></div>
+      <h2 style="margin-top:22px">El 99% oficial esconde la subejecución</h2>
       <div class="sub" id="brSub"></div>
       <div class="chart mid"><canvas id="cBrecha"></canvas></div>
-      <h2 style="margin-top:22px">Quién gasta en diciembre</h2>
+    </div>
+  </section>
+
+  <section class="g2b">
+    <div>
+      <h2>Quién gasta en diciembre</h2>
       <div class="sub">% del gasto anual ejecutado en diciembre · mediana de los últimos 3 años · instituciones con presupuesto sobre $20.000 MM</div>
       <div class="scroll"><table id="tDic"></table></div>
+    </div>
+    <div>
+      <h2>Qué probé y cuánto depende el resultado de mis decisiones</h2>
+      <div class="sub" id="senSub"></div>
+      <div class="scroll"><table id="tNo"></table></div>
+      <div class="scroll" style="margin-top:12px"><table id="tSen"></table></div>
     </div>
   </section>
 
   <section class="method">
     <div><h2>Datos</h2><p>Ejecución presupuestaria y Ley de Presupuestos inicial y vigente, mensuales, del Gobierno Central (DIPRES vía datos.gob.cl), 2017 a la fecha. Gasto de cada servicio sin operaciones financieras ni Tesoro Público, en millones de pesos nominales.</p></div>
-    <div><h2>Proyección</h2><p>Cierre = ejecutado al corte ÷ avance típico de esa institución al mismo mes en sus últimos 3 años. Alerta si el cierre proyectado queda bajo 90% del presupuesto vigente al corte.</p></div>
-    <div><h2>Validación</h2><p>Cada año pasado se proyectó usando solo los años anteriores, y se comparó con lo que realmente pasó. 2020 y 2021 (pandemia) se informan pero no entran en el resumen.</p></div>
+    <div><h2>Modelo de riesgo</h2><p>Combina la proyección (ejecutado ÷ avance típico de la institución), el nivel de ejecución, su historial, el ritmo de los últimos 3 meses y el peso de la inversión en una regresión logística. Alerta si la probabilidad supera un umbral elegido solo con los años de ajuste.</p></div>
+    <div><h2>Validación</h2><p>Ajustado con 2019-2022 y probado en 2023-2025, que no se usaron para elegir nada. Cada año se evalúa solo con información de años anteriores.</p></div>
   </section>
 
   <footer>Proyecto de portafolio de <b>Tomás Moya Araya</b> · código y metodología en
@@ -177,9 +197,9 @@ const ejes = (extra = {}) => ({
 // ---------- encabezado ----------
 document.getElementById("h1").textContent = `Ejecución presupuestaria ${D.año}`;
 document.getElementById("when").innerHTML = `Datos a <b>${D.mes_corte_largo} de ${D.año}</b> · millones de pesos (MM$) y billones (bn) · ${D.kpis.Todos.n_inst} servicios públicos`;
-const rv = D.validacion.resumen;
+const MJ = D.mejoras;
 document.getElementById("mensaje").innerHTML = D.titular +
-  `<small>En años pasados, esta proyección detectó ${nf0.format(rv.cobertura)}% de las instituciones que terminaron bajo 90%, y ${nf0.format(rv.precision)}% de sus alertas resultaron correctas. Es una señal para revisar, no una certeza.</small>`;
+  `<small>En los años de prueba (${MJ.años_prueba.join(", ")}), el modelo detectó ${nf0.format(MJ.modelo.cobertura)}% de las instituciones que terminaron bajo 90%, y ${nf0.format(MJ.modelo.precision)}% de sus alertas resultaron correctas. Es una señal para revisar, no una certeza.</small>`;
 const sel = document.getElementById("fMin");
 sel.innerHTML = Object.keys(D.grupos).map(g => `<option>${g}</option>`).join("");
 sel.onchange = () => { grupo = sel.value; render(); };
@@ -195,7 +215,7 @@ function kpis() {
         dHist == null ? "sin años anteriores comparables"
           : `<span class="${dHist >= 0 ? "pos" : "neg"}">${sg(dHist)} pp</span> vs lo típico (${nf1.format(k.pct_hist)}%)`) +
     cel("Cierre proyectado", nf1.format(k.pct_proy) + "%", `del presupuesto vigente a ${D.mes_corte}`) +
-    cel("Instituciones en alerta", `<span class="${k.n_alertas ? "neg" : ""}">${k.n_alertas}</span>`, `de ${k.n_inst} · cierre proyectado bajo ${D.umbral}%`) +
+    cel("Instituciones en alerta", `<span class="${k.n_alertas ? "neg" : ""}">${k.n_alertas}</span>`, `de ${k.n_inst} · con riesgo de subejecución`) +
     cel("Monto en riesgo", `<span class="${k.sin_ejecutar ? "neg" : ""}">${mm(k.sin_ejecutar)}</span>`, "presupuesto que quedaría sin gastar");
 }
 
@@ -216,17 +236,19 @@ function curva() {
 }
 
 // ---------- alertas ----------
+const NIVEL = {"Moderado": "n-mod", "Alto": "n-alt", "Muy alto": "n-muy"};
 function alertas() {
   const p = D.grupos[grupo];
   const al = D.alertas.filter(x => p === null || String(x.partida) === p);
   const max = Math.max(1, ...al.map(x => x.sin_ejecutar));
   document.getElementById("alSub").textContent = al.length
-    ? `${al.length} instituciones con cierre proyectado bajo ${D.umbral}% · ordenadas por monto que quedaría sin gastar · últimos años: % ejecutado del presupuesto que tenía en ${D.mes_corte}`
-    : `Ninguna institución de este ministerio proyecta cerrar bajo ${D.umbral}%.`;
+    ? `${al.length} instituciones con riesgo de subejecución · ordenadas por monto que quedaría sin gastar · en gris, qué tipo de gasto explica el atraso · años previos: % ejecutado de lo que tenían en ${D.mes_corte}`
+    : "Ninguna institución de este ministerio tiene riesgo de subejecución.";
   document.getElementById("tAlertas").innerHTML = !al.length ? "" :
-    `<tr><th>Institución</th><th>Ejecutado</th><th>Proyectado</th><th>Sin gastar</th><th></th><th>Años previos</th></tr>` +
-    al.map(x => `<tr><td class="wrapc">${x.institucion}<small>${x.ministerio}</small></td>
-      <td>${nf1.format(x.pct_ejec)}%</td><td class="neg">${nf1.format(x.pct_proy)}%</td><td>${mm(x.sin_ejecutar)}</td>
+    `<tr><th>Institución</th><th>Riesgo</th><th>Ejecutado</th><th>Cierre proy.</th><th>Sin gastar</th><th></th><th>Años previos</th></tr>` +
+    al.map(x => `<tr><td class="wrapc">${x.institucion}<small>${x.ministerio}</small>${x.causa.slice(0, 2).map(c => `<small class="why">${c}</small>`).join("")}</td>
+      <td><span class="pill ${NIVEL[x.nivel]}">${x.nivel}</span></td>
+      <td>${nf1.format(x.pct_ejec)}%</td><td>${nf1.format(x.pct_proy)}%</td><td>${mm(x.sin_ejecutar)}</td>
       <td class="barcell"><div class="hbar"><i style="width:${x.sin_ejecutar / max * 100}%"></i></div></td>
       <td><div class="hist">${x.historia.length ? x.historia.slice(-3).map(([a, v]) => `<span class="${v < D.umbral ? "b" : ""}" title="${a}">${nf0.format(v)}%</span>`).join("") : '<span title="Sin historia comparable">nueva</span>'}</div></td></tr>`).join("");
 }
@@ -255,19 +277,38 @@ function ministerios() {
 
 // ---------- validación ----------
 function validacion() {
-  const rs = rv.regla_simple;
+  const m = MJ.modelo, p = MJ.proyeccion, r = MJ.regla;
   document.getElementById("valSub").textContent =
-    `Cada año se proyectó en ${D.mes_corte} usando solo los años anteriores y se comparó con el cierre real. Resumen de ${rv.años.join(", ")} (sin pandemia).`;
+    `Años de prueba ${MJ.años_prueba.join(", ")} (${MJ.casos_prueba} casos de ${MJ.instituciones_prueba} instituciones): el modelo se ajustó con ${MJ.años_ajuste[0]}-${MJ.años_ajuste[MJ.años_ajuste.length - 1]} y estos años no se tocaron.`;
+  const n3 = new Intl.NumberFormat("es-CL", {minimumFractionDigits: 2, maximumFractionDigits: 2});
   document.getElementById("big").innerHTML =
-    `<div><b>${nf0.format(rv.cobertura)}%</b><span>de los casos detectados (${rv.aciertos} de ${rv.casos}). Regla simple: ${nf0.format(rs.cobertura)}%</span></div>
-     <div><b>${nf0.format(rv.precision)}%</b><span>de las alertas fueron correctas (${rv.aciertos} de ${rv.alertas}). Regla simple: ${nf0.format(rs.precision)}%</span></div>
-     <div><b>${nf1.format(rv.error_patron_pp)} pp</b><span>error típico del cierre proyectado. Proyección lineal: ${nf1.format(rv.error_lineal_pp)} pp</span></div>`;
-  document.getElementById("tVal").innerHTML =
-    `<tr><th>Año</th><th>Bajo ${D.umbral}%</th><th>Alertas</th><th>Aciertos</th><th>Falsas</th><th>No detect.</th><th>Error pp</th></tr>` +
-    D.validacion.años.map(v => `<tr style="${v["Atípico"] ? "color:var(--muted)" : ""}"><td>${v["Año"]}${v["Atípico"] ? " *" : ""}</td>
-      <td>${v["Cerraron bajo 90%"]}</td><td>${v.Alertas}</td><td>${v.Aciertos}</td><td>${v["Falsas alarmas"]}</td>
-      <td>${v["No detectadas"]}</td><td>${nf1.format(v["Error patrón (pp)"])}</td></tr>`).join("") +
-    `<tr><td colspan="7" style="text-align:left;color:var(--muted);font-size:11.5px;border:0">* Pandemia: se informa pero no entra en el resumen. Regla simple = alertar a quien ya cerró bajo ${D.umbral}% el año anterior.</td></tr>`;
+    `<div><b>${nf0.format(m.cobertura)}%</b><span>de los casos detectados (${m.aciertos} de ${m.casos}). Proyección simple: ${nf0.format(p.cobertura)}%</span></div>
+     <div><b>${nf0.format(m.precision)}%</b><span>de las alertas fueron correctas (${m.aciertos} de ${m.alertas}). Proyección simple: ${nf0.format(p.precision)}%</span></div>
+     <div><b>${n3.format(MJ.auc.modelo)}</b><span>AUC: qué tan bien ordena de más a menos riesgo (0,5 = azar, 1 = perfecto). Proyección simple: ${n3.format(MJ.auc.proyeccion)}</span></div>`;
+  const fila = (n, x) => `<tr><td>${n}</td><td>${x.alertas}</td><td>${x.aciertos}</td><td>${nf0.format(x.precision)}%</td><td>${nf0.format(x.cobertura)}%</td></tr>`;
+  document.getElementById("tComp").innerHTML =
+    `<tr><th>Método</th><th>Alertas</th><th>Aciertos</th><th>Precisión</th><th>Cobertura</th></tr>` +
+    fila("Regla simple (cerró bajo 90% el año anterior)", r) + fila("Proyección simple", p) + fila("Modelo de riesgo", m);
+  document.getElementById("curSub").textContent =
+    `Casos encontrados (de ${MJ.casos_prueba}) al revisar solo las N instituciones de mayor riesgo, según cada método.`;
+  document.getElementById("tCur").innerHTML =
+    `<tr><th>Alertas revisadas</th><th>Proyección simple</th><th>Modelo</th></tr>` +
+    Object.entries(MJ.curva).map(([n, v]) => `<tr><td>${n}</td><td>${v.proyeccion}</td><td class="${v.modelo > v.proyeccion ? "pos" : v.modelo < v.proyeccion ? "neg" : ""}">${v.modelo}</td></tr>`).join("") +
+    `<tr><td colspan="3" style="text-align:left;color:var(--muted);font-size:11.5px;border:0">Con pocas alertas, la proyección simple es igual o mejor; el modelo gana cuando se revisan más instituciones.</td></tr>`;
+  document.getElementById("calSub").textContent =
+    "En los años de prueba, qué porcentaje de las instituciones de cada nivel terminó realmente bajo 90%. No tomes la probabilidad del modelo al pie de la letra: en los niveles altos se pasa de optimista.";
+  document.getElementById("tCal").innerHTML =
+    `<tr><th>Nivel de riesgo</th><th>Instituciones</th><th>El modelo decía</th><th>Terminó bajo 90%</th></tr>` +
+    MJ.calibracion.map(c => `<tr><td>${c.tramo}</td><td>${c.instituciones}</td><td>${c.prob_media == null ? "—" : nf0.format(c.prob_media) + "%"}</td><td><b>${c.cerraron_bajo == null ? "—" : nf0.format(c.cerraron_bajo) + "%"}</b></td></tr>`).join("");
+  document.getElementById("senSub").textContent =
+    "Probé tres ideas de proyección, y después cambié mis decisiones una por una para ver si el resultado se sostiene (años de prueba).";
+  document.getElementById("tNo").innerHTML =
+    `<tr><th>Variante de proyección</th><th>Tramo</th><th>Error (pp)</th><th>AUC</th></tr>` +
+    MJ.no_ayudaron.map(v => `<tr><td>${v.variante}</td><td>${v.tramo}</td><td>${nf1.format(v.error_pp)}</td><td>${n3.format(v.auc)}</td></tr>`).join("") +
+    `<tr><td colspan="4" style="text-align:left;color:var(--muted);font-size:11.5px;border:0">Proyectar por tipo de gasto o ignorar 2020-2021 no mejoró: se descartaron.</td></tr>`;
+  document.getElementById("tSen").innerHTML =
+    `<tr><th>Si cambio…</th><th>Cobertura</th><th>Precisión</th><th>AUC</th></tr>` +
+    MJ.sensibilidad.map(s => `<tr><td>${s.escenario}</td><td>${nf0.format(s["Cobertura modelo %"])}%</td><td>${nf0.format(s["Precisión modelo %"])}%</td><td>${n3.format(s["AUC modelo"])}</td></tr>`).join("");
 }
 
 // ---------- brecha y diciembre ----------

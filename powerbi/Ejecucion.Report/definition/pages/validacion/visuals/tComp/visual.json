@@ -1,12 +1,12 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
-  "name": "tVal",
+  "name": "tComp",
   "position": {
     "x": 20,
-    "y": 200,
+    "y": 190,
     "z": 0,
-    "width": 600,
-    "height": 390
+    "width": 610,
+    "height": 150
   },
   "visual": {
     "visualType": "tableEx",
@@ -19,15 +19,15 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "Validacion"
+                      "Entity": "Comparacion"
                     }
                   },
-                  "Property": "año"
+                  "Property": "metodo"
                 }
               },
-              "queryRef": "Validacion.año",
-              "nativeQueryRef": "año",
-              "displayName": "Año"
+              "queryRef": "Comparacion.metodo",
+              "nativeQueryRef": "metodo",
+              "displayName": "Método"
             },
             {
               "field": {
@@ -36,27 +36,7 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "Validacion"
-                        }
-                      },
-                      "Property": "cerraron_bajo"
-                    }
-                  },
-                  "Function": 0
-                }
-              },
-              "queryRef": "Sum(Validacion.cerraron_bajo)",
-              "nativeQueryRef": "Suma de cerraron_bajo",
-              "displayName": "Cerraron bajo 90%"
-            },
-            {
-              "field": {
-                "Aggregation": {
-                  "Expression": {
-                    "Column": {
-                      "Expression": {
-                        "SourceRef": {
-                          "Entity": "Validacion"
+                          "Entity": "Comparacion"
                         }
                       },
                       "Property": "alertas"
@@ -65,7 +45,7 @@
                   "Function": 0
                 }
               },
-              "queryRef": "Sum(Validacion.alertas)",
+              "queryRef": "Sum(Comparacion.alertas)",
               "nativeQueryRef": "Suma de alertas",
               "displayName": "Alertas"
             },
@@ -76,7 +56,7 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "Validacion"
+                          "Entity": "Comparacion"
                         }
                       },
                       "Property": "aciertos"
@@ -85,7 +65,7 @@
                   "Function": 0
                 }
               },
-              "queryRef": "Sum(Validacion.aciertos)",
+              "queryRef": "Sum(Comparacion.aciertos)",
               "nativeQueryRef": "Suma de aciertos",
               "displayName": "Aciertos"
             },
@@ -96,18 +76,18 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "Validacion"
+                          "Entity": "Comparacion"
                         }
                       },
-                      "Property": "falsas"
+                      "Property": "precision"
                     }
                   },
                   "Function": 0
                 }
               },
-              "queryRef": "Sum(Validacion.falsas)",
-              "nativeQueryRef": "Suma de falsas",
-              "displayName": "Falsas alarmas"
+              "queryRef": "Sum(Comparacion.precision)",
+              "nativeQueryRef": "Suma de precision",
+              "displayName": "Precisión"
             },
             {
               "field": {
@@ -116,53 +96,18 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "Validacion"
+                          "Entity": "Comparacion"
                         }
                       },
-                      "Property": "no_detectadas"
+                      "Property": "cobertura"
                     }
                   },
                   "Function": 0
                 }
               },
-              "queryRef": "Sum(Validacion.no_detectadas)",
-              "nativeQueryRef": "Suma de no_detectadas",
-              "displayName": "No detectadas"
-            },
-            {
-              "field": {
-                "Aggregation": {
-                  "Expression": {
-                    "Column": {
-                      "Expression": {
-                        "SourceRef": {
-                          "Entity": "Validacion"
-                        }
-                      },
-                      "Property": "error_pp"
-                    }
-                  },
-                  "Function": 0
-                }
-              },
-              "queryRef": "Sum(Validacion.error_pp)",
-              "nativeQueryRef": "Suma de error_pp",
-              "displayName": "Error (pp)"
-            },
-            {
-              "field": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "Validacion"
-                    }
-                  },
-                  "Property": "pandemia"
-                }
-              },
-              "queryRef": "Validacion.pandemia",
-              "nativeQueryRef": "pandemia",
-              "displayName": "Pandemia"
+              "queryRef": "Sum(Comparacion.cobertura)",
+              "nativeQueryRef": "Suma de cobertura",
+              "displayName": "Cobertura"
             }
           ]
         }
@@ -183,7 +128,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Proyección hecha cada año en agosto con los años anteriores, contra el cierre real'"
+                  "Value": "'Resultados en los años de prueba (2023-2025)'"
                 }
               }
             }

@@ -86,9 +86,11 @@ def main():
     año, corte = A.corte_actual(m)
     ia = A.institucion_año(m, inst, corte)
     actual = A.año_en_curso(m, inst, ia, año, corte)
-    val, det = A.validar(ia, corte)
-    rv = A.resumen_validacion(val)
-    rv["regla_simple"] = A.regla_simple(ia, det)
+    # Las alertas vienen del modelo de riesgo (mejoras.py): probabilidad -> nivel de riesgo y causa del atraso
+    riesgo = pd.read_csv(BASE / "datos" / "riesgo.csv")
+    actual = actual.drop(columns=["alerta"]).merge(riesgo[A.K + ["alerta", "nivel", "causa"]], on=A.K, how="left")
+    actual["alerta"] = actual.alerta.fillna(False).astype(bool)
+    mj = json.loads((BASE / "resultados" / "mejoras.json").read_text(encoding="utf-8"))
 
     ministerios = (actual.groupby(["partida", "ministerio"]).vig_corte.sum().reset_index()
                    .sort_values("vig_corte", ascending=False))
@@ -108,6 +110,9 @@ def main():
     tmin = tmin.sort_values("vigente", ascending=False)
 
     al = actual[actual.alerta].sort_values("sin_ejecutar_proy", ascending=False)
+    tmin = tmin.drop(columns=["alertas", "sin_ejecutar"]).merge(
+        al.groupby("partida").agg(alertas=("alerta", "sum"), sin_ejecutar=("sin_ejecutar_proy", "sum")).reset_index(),
+        on="partida", how="left").fillna({"alertas": 0, "sin_ejecutar": 0})
     hist_inst = ia[ia.año < año].sort_values("año")
     trayect = hist_inst.groupby(A.K).apply(
         lambda g: [[int(a), r(p * 100)] for a, p in zip(g.año.tail(4), g.pct_final.tail(4))], include_groups=False)
@@ -127,7 +132,7 @@ def main():
     MES_LARGO = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre",
                  "noviembre", "diciembre"]
     n = lambda v, dec=1: f"{v:,.{dec}f}".replace(",", "§").replace(".", ",").replace("§", ".")  # formato es-CL
-    titular = (f"A {MES_LARGO[corte - 1]}, {k_all['n_alertas']} instituciones van camino a dejar sin gastar "
+    titular = (f"A {MES_LARGO[corte - 1]}, {k_all['n_alertas']} instituciones tienen riesgo de dejar sin gastar "
                f"${n(mm_a_bn(k_all['sin_ejecutar']))} billones de su presupuesto vigente. Las de mayor monto: "
                + ", ".join(nombre(t.institucion) for t in top.itertuples()) + ".")
     d = {
@@ -142,10 +147,11 @@ def main():
         "alertas": [{"partida": int(x.partida), "ministerio": x.ministerio, "institucion": nombre(x.institucion),
                      "vigente": r(x.vig_corte, 0), "pct_ejec": r(x.ejec_corte / x.vig_corte * 100),
                      "pct_proy": r(x.pct_proy * 100), "sin_ejecutar": r(x.sin_ejecutar_proy, 0),
-                     "historia": trayect.get((x.partida, x.capitulo), []), "usa_historia": bool(x.usa_historia)}
+                     "historia": trayect.get((x.partida, x.capitulo), []), "usa_historia": bool(x.usa_historia),
+                     "nivel": x.nivel, "causa": [c.strip() for c in str(x.causa).split("·") if c.strip()]}
                     for x in al.itertuples()],
         "brecha": [{"año": int(a), "corte": r(x.c), "oficial": r(x.o)} for a, x in brecha.iterrows()],
-        "validacion": {"años": val.assign(Atípico=val.Atípico.astype(bool)).to_dict("records"), "resumen": rv},
+        "mejoras": mj,
         "diciembre": [{"ministerio": x.ministerio, "institucion": nombre(x.institucion), "peso": r(x.peso * 100),
                        "presupuesto": r(x.presupuesto, 0)} for x in dic.itertuples()],
         "umbral": A.UMBRAL_SUBEJECUCION * 100,

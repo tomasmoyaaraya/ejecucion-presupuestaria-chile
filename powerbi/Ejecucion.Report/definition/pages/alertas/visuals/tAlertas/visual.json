@@ -5,7 +5,7 @@
     "x": 20,
     "y": 130,
     "z": 0,
-    "width": 900,
+    "width": 980,
     "height": 580
   },
   "visual": {
@@ -31,23 +31,18 @@
             },
             {
               "field": {
-                "Aggregation": {
+                "Column": {
                   "Expression": {
-                    "Column": {
-                      "Expression": {
-                        "SourceRef": {
-                          "Entity": "Alertas"
-                        }
-                      },
-                      "Property": "vig_corte"
+                    "SourceRef": {
+                      "Entity": "Alertas"
                     }
                   },
-                  "Function": 0
+                  "Property": "nivel"
                 }
               },
-              "queryRef": "Sum(Alertas.vig_corte)",
-              "nativeQueryRef": "Suma de vig_corte",
-              "displayName": "Vigente MM$"
+              "queryRef": "Alertas.nivel",
+              "nativeQueryRef": "nivel",
+              "displayName": "Riesgo"
             },
             {
               "field": {
@@ -113,6 +108,21 @@
               "queryRef": "Alertas.años_previos",
               "nativeQueryRef": "años_previos",
               "displayName": "Años previos"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Alertas"
+                    }
+                  },
+                  "Property": "causa_1"
+                }
+              },
+              "queryRef": "Alertas.causa_1",
+              "nativeQueryRef": "causa_1",
+              "displayName": "Qué explica el atraso"
             }
           ]
         }
@@ -156,7 +166,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Instituciones con cierre proyectado bajo 90% del presupuesto vigente'"
+                  "Value": "'Instituciones con riesgo de no ejecutar su presupuesto'"
                 }
               }
             }

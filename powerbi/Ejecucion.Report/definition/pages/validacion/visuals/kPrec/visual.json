@@ -3,7 +3,7 @@
   "name": "kPrec",
   "position": {
     "x": 340,
-    "y": 80,
+    "y": 76,
     "z": 0,
     "width": 300,
     "height": 96
@@ -22,11 +22,11 @@
                       "Entity": "Medidas"
                     }
                   },
-                  "Property": "Precisión"
+                  "Property": "Precisión Modelo"
                 }
               },
-              "queryRef": "Medidas.Precisión",
-              "nativeQueryRef": "Precisión"
+              "queryRef": "Medidas.Precisión Modelo",
+              "nativeQueryRef": "Precisión Modelo"
             }
           ]
         }
@@ -47,7 +47,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Alertas correctas (años normales)'"
+                  "Value": "'Alertas correctas (modelo)'"
                 }
               }
             }

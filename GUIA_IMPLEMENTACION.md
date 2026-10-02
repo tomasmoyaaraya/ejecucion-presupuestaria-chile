@@ -96,6 +96,11 @@ Esta es la parte que casi nadie hace y la que da credibilidad:
 - **Probar con el pasado sin hacer trampa:** proyectar cada mes o año anterior usando *solo* la información que
   existía en ese momento, y comparar con lo que pasó.
 - **Compararse con una regla tonta** (repetir el año anterior, proyección lineal). Si el método no le gana, no aporta.
+- **Separar años de ajuste y años de prueba.** Los de ajuste sirven para probar ideas y elegir parámetros; los de prueba
+  no se tocan hasta el final. Los resultados que se muestran salen solo de los de prueba.
+- **Revisar si las probabilidades son confiables (calibración).** Un modelo puede ordenar bien y aun así ser
+  optimista: aquí decía 96% de riesgo y acertó 74%. Si pasa, mostrar niveles de riesgo con su tasa de acierto real.
+- **Mirar año por año, no solo el total:** el modelo ganó en dos de tres años; en el tercero fue mejor la regla simple.
 - **Fijar los parámetros antes** de mirar el resultado (umbrales, meses de historia). Si se ajustan hasta que "dé
   bien", el resultado deja de valer.
 - **Decir los números como son:** aquí la proyección detecta 76% de los casos, pero 46% de sus alertas no se cumplen.
@@ -127,6 +132,8 @@ Reglas de diseño (estándar IBCS), que hacen que el informe se lea igual siempr
 | Confiar en la cifra oficial | El "99% de ejecución" se mide contra un presupuesto ya recortado | Preguntar siempre "¿contra qué se compara este %?" |
 | Mostrar el mes en curso como cerrado | Un mes a medias parecía una caída de ventas | Separar meses cerrados de la proyección |
 | Formatos que cambian | Los archivos traían columnas distintas según el año | Normalizar al leer y validar totales |
+| Creer que un modelo más sofisticado siempre gana | Con pocas alertas, la proyección simple igualó al modelo; ganó solo al ampliar la red | Comparar contra el método simple con el mismo número de alertas |
+| Probar muchas ideas y quedarse con la que sale bien | Proyectar por tipo de gasto empeoró el resultado | Registrar también lo que no funcionó |
 | Publicar rutas del computador | El proyecto de Power BI guardaba la carpeta personal | Revisar los archivos antes de publicar; las rutas locales fuera del repositorio |
 
 ---

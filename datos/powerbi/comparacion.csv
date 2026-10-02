@@ -1,0 +1,4 @@
+metodo,alertas,aciertos,precision,cobertura
+Regla simple,111,60,0.541,0.619
+Proyección simple,100,62,0.62,0.639
+Modelo de riesgo,122,72,0.59,0.742

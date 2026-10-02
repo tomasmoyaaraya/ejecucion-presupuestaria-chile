@@ -3,7 +3,7 @@
   "name": "kCob",
   "position": {
     "x": 20,
-    "y": 80,
+    "y": 76,
     "z": 0,
     "width": 300,
     "height": 96
@@ -22,11 +22,11 @@
                       "Entity": "Medidas"
                     }
                   },
-                  "Property": "Cobertura"
+                  "Property": "Cobertura Modelo"
                 }
               },
-              "queryRef": "Medidas.Cobertura",
-              "nativeQueryRef": "Cobertura"
+              "queryRef": "Medidas.Cobertura Modelo",
+              "nativeQueryRef": "Cobertura Modelo"
             }
           ]
         }
@@ -47,7 +47,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Casos detectados (años normales)'"
+                  "Value": "'Casos detectados (modelo)'"
                 }
               }
             }

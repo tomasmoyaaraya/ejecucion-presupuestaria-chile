@@ -36,13 +36,36 @@ table Alertas
 		summarizeBy: none
 		sourceColumn: años_previos
 
+	column nivel
+		dataType: string
+		sortByColumn: nivel_orden
+		summarizeBy: none
+		sourceColumn: nivel
+
+	column nivel_orden
+		dataType: int64
+		formatString: 0
+		isHidden
+		summarizeBy: none
+		sourceColumn: nivel_orden
+
+	column causa_1
+		dataType: string
+		summarizeBy: none
+		sourceColumn: causa_1
+
+	column causa_2
+		dataType: string
+		summarizeBy: none
+		sourceColumn: causa_2
+
 	partition Alertas = m
 		mode: import
 		source =
 				let
 				    Origen = Csv.Document(File.Contents(CarpetaDatos & "\alertas.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
 				    Encabezados = Table.PromoteHeaders(Origen, [PromoteAllScalars=true]),
-				    Tipos = Table.TransformColumnTypes(Encabezados, {{"inst_id", Int64.Type}, {"vig_corte", type number}, {"ejec_corte", type number}, {"pct_proy", type number}, {"sin_ejecutar_proy", type number}, {"años_previos", type text}}, "en-US")
+				    Tipos = Table.TransformColumnTypes(Encabezados, {{"inst_id", Int64.Type}, {"vig_corte", type number}, {"ejec_corte", type number}, {"pct_proy", type number}, {"sin_ejecutar_proy", type number}, {"años_previos", type text}, {"nivel", type text}, {"nivel_orden", Int64.Type}, {"causa_1", type text}, {"causa_2", type text}}, "en-US")
 				in
 				    Tipos
 

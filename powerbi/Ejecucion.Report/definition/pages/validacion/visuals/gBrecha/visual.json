@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
   "name": "gBrecha",
   "position": {
-    "x": 660,
-    "y": 200,
+    "x": 650,
+    "y": 350,
     "z": 0,
-    "width": 600,
-    "height": 390
+    "width": 610,
+    "height": 255
   },
   "visual": {
     "visualType": "clusteredColumnChart",
@@ -82,7 +82,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Instituciones que cerraron bajo 90%: depende contra qué presupuesto se mida'"
+                  "Value": "'Instituciones bajo 90%: depende contra qué presupuesto se mida'"
                 }
               }
             }

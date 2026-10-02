@@ -1,9 +1,9 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
-  "name": "kErr",
+  "name": "kCobP",
   "position": {
     "x": 660,
-    "y": 80,
+    "y": 76,
     "z": 0,
     "width": 300,
     "height": 96
@@ -22,11 +22,11 @@
                       "Entity": "Medidas"
                     }
                   },
-                  "Property": "Error Típico (pp)"
+                  "Property": "Cobertura Proyección Simple"
                 }
               },
-              "queryRef": "Medidas.Error Típico (pp)",
-              "nativeQueryRef": "Error Típico (pp)"
+              "queryRef": "Medidas.Cobertura Proyección Simple",
+              "nativeQueryRef": "Cobertura Proyección Simple"
             }
           ]
         }
@@ -47,7 +47,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Error típico del cierre (pp)'"
+                  "Value": "'Casos detectados (proyección simple)'"
                 }
               }
             }

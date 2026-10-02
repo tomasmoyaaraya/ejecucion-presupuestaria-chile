@@ -108,16 +108,16 @@ table Medidas
 	measure 'Color Cierre' = IF([Cierre Proyectado %] < 0.9, "#D6453D", "#1A1A1A")
 		displayFolder: 4 Proyección
 
-	measure 'Precisión' = DIVIDE(CALCULATE(SUM(Validacion[aciertos]), Validacion[atipico] = FALSE()), CALCULATE(SUM(Validacion[alertas]), Validacion[atipico] = FALSE()))
+	measure 'Cobertura Modelo' = CALCULATE(SUM(Comparacion[cobertura]), Comparacion[metodo] = "Modelo de riesgo")
 		formatString: 0.0%
 		displayFolder: 5 Validación
 
-	measure 'Cobertura' = DIVIDE(CALCULATE(SUM(Validacion[aciertos]), Validacion[atipico] = FALSE()), CALCULATE(SUM(Validacion[cerraron_bajo]), Validacion[atipico] = FALSE()))
+	measure 'Precisión Modelo' = CALCULATE(SUM(Comparacion[precision]), Comparacion[metodo] = "Modelo de riesgo")
 		formatString: 0.0%
 		displayFolder: 5 Validación
 
-	measure 'Error Típico (pp)' = CALCULATE(MEDIAN(Validacion[error_pp]), Validacion[atipico] = FALSE())
-		formatString: 0.0
+	measure 'Cobertura Proyección Simple' = CALCULATE(SUM(Comparacion[cobertura]), Comparacion[metodo] = "Proyección simple")
+		formatString: 0.0%
 		displayFolder: 5 Validación
 
 	measure '% Bajo 90% (oficial)' = SUM(Brecha[oficial])

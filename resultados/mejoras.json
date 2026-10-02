@@ -1,0 +1,351 @@
+{
+  "umbral_subejecucion": 0.9,
+  "k": 3,
+  "umbral_probabilidad": 0.28,
+  "años_ajuste": [
+    2019,
+    2020,
+    2021,
+    2022
+  ],
+  "años_prueba": [
+    2023,
+    2024,
+    2025
+  ],
+  "casos_prueba": 97,
+  "instituciones_prueba": 693,
+  "regla": {
+    "alertas": 111,
+    "casos": 97,
+    "aciertos": 60,
+    "precision": 54.1,
+    "cobertura": 61.9,
+    "f1": 57.7
+  },
+  "proyeccion": {
+    "alertas": 100,
+    "casos": 97,
+    "aciertos": 62,
+    "precision": 62.0,
+    "cobertura": 63.9,
+    "f1": 62.9
+  },
+  "modelo": {
+    "alertas": 122,
+    "casos": 97,
+    "aciertos": 72,
+    "precision": 59.0,
+    "cobertura": 74.2,
+    "f1": 65.8
+  },
+  "mismas_alertas": {
+    "n": 100,
+    "proyeccion": {
+      "alertas": 100,
+      "casos": 97,
+      "aciertos": 62,
+      "precision": 62.0,
+      "cobertura": 63.9,
+      "f1": 62.9
+    },
+    "modelo": {
+      "alertas": 100,
+      "casos": 97,
+      "aciertos": 62,
+      "precision": 62.0,
+      "cobertura": 63.9,
+      "f1": 62.9
+    }
+  },
+  "auc": {
+    "proyeccion": 0.804,
+    "modelo": 0.925
+  },
+  "por_año": {
+    "2023": {
+      "regla": {
+        "alertas": 22,
+        "casos": 34,
+        "aciertos": 16,
+        "precision": 72.7,
+        "cobertura": 47.1,
+        "f1": 57.1
+      },
+      "proyeccion": {
+        "alertas": 38,
+        "casos": 34,
+        "aciertos": 23,
+        "precision": 60.5,
+        "cobertura": 67.6,
+        "f1": 63.9
+      },
+      "modelo": {
+        "alertas": 34,
+        "casos": 34,
+        "aciertos": 23,
+        "precision": 67.6,
+        "cobertura": 67.6,
+        "f1": 67.6
+      }
+    },
+    "2024": {
+      "regla": {
+        "alertas": 41,
+        "casos": 32,
+        "aciertos": 24,
+        "precision": 58.5,
+        "cobertura": 75.0,
+        "f1": 65.8
+      },
+      "proyeccion": {
+        "alertas": 24,
+        "casos": 32,
+        "aciertos": 15,
+        "precision": 62.5,
+        "cobertura": 46.9,
+        "f1": 53.6
+      },
+      "modelo": {
+        "alertas": 39,
+        "casos": 32,
+        "aciertos": 24,
+        "precision": 61.5,
+        "cobertura": 75.0,
+        "f1": 67.6
+      }
+    },
+    "2025": {
+      "regla": {
+        "alertas": 48,
+        "casos": 31,
+        "aciertos": 20,
+        "precision": 41.7,
+        "cobertura": 64.5,
+        "f1": 50.6
+      },
+      "proyeccion": {
+        "alertas": 38,
+        "casos": 31,
+        "aciertos": 24,
+        "precision": 63.2,
+        "cobertura": 77.4,
+        "f1": 69.6
+      },
+      "modelo": {
+        "alertas": 49,
+        "casos": 31,
+        "aciertos": 25,
+        "precision": 51.0,
+        "cobertura": 80.6,
+        "f1": 62.5
+      }
+    }
+  },
+  "curva": {
+    "30": {
+      "proyeccion": 27,
+      "modelo": 23
+    },
+    "50": {
+      "proyeccion": 36,
+      "modelo": 36
+    },
+    "100": {
+      "proyeccion": 62,
+      "modelo": 62
+    },
+    "150": {
+      "proyeccion": 73,
+      "modelo": 82
+    },
+    "200": {
+      "proyeccion": 74,
+      "modelo": 91
+    }
+  },
+  "calibracion": [
+    {
+      "tramo": "Bajo el umbral",
+      "desde": 0,
+      "hasta": 0.28,
+      "instituciones": 571,
+      "prob_media": 4.0,
+      "cerraron_bajo": 4.4
+    },
+    {
+      "tramo": "Riesgo moderado",
+      "desde": 0.28,
+      "hasta": 0.5,
+      "instituciones": 34,
+      "prob_media": 37.0,
+      "cerraron_bajo": 47.1
+    },
+    {
+      "tramo": "Riesgo alto",
+      "desde": 0.5,
+      "hasta": 0.8,
+      "instituciones": 39,
+      "prob_media": 62.1,
+      "cerraron_bajo": 51.3
+    },
+    {
+      "tramo": "Riesgo muy alto",
+      "desde": 0.8,
+      "hasta": 1.0,
+      "instituciones": 49,
+      "prob_media": 96.1,
+      "cerraron_bajo": 73.5
+    }
+  ],
+  "auc_por_año": {
+    "2023": {
+      "proyeccion": 0.822,
+      "modelo": 0.952
+    },
+    "2024": {
+      "proyeccion": 0.721,
+      "modelo": 0.929
+    },
+    "2025": {
+      "proyeccion": 0.868,
+      "modelo": 0.902
+    }
+  },
+  "coeficientes": {
+    "Cierre proyectado (% del vigente)": 0.27,
+    "Ejecutado a la fecha (% del vigente)": -1.76,
+    "Cierre del año anterior": -0.52,
+    "Peor cierre de los últimos 3 años": -0.27,
+    "Ritmo de los últimos 3 meses": -0.39,
+    "Peso de la inversión en el presupuesto": 0.1,
+    "Tamaño del presupuesto": 0.16,
+    "Tiene historia propia": 0.07
+  },
+  "sensibilidad": [
+    {
+      "escenario": "Base: 3 años de historia, umbral 90%",
+      "casos": 97,
+      "AUC proyección": 0.804,
+      "AUC modelo": 0.925,
+      "Cobertura proyección %": 63.9,
+      "Precisión proyección %": 62.0,
+      "Cobertura modelo %": 74.2,
+      "Precisión modelo %": 59.0
+    },
+    {
+      "escenario": "2 años de historia",
+      "casos": 97,
+      "AUC proyección": 0.802,
+      "AUC modelo": 0.925,
+      "Cobertura proyección %": 62.9,
+      "Precisión proyección %": 62.2,
+      "Cobertura modelo %": 74.2,
+      "Precisión modelo %": 59.5
+    },
+    {
+      "escenario": "4 años de historia",
+      "casos": 97,
+      "AUC proyección": 0.809,
+      "AUC modelo": 0.925,
+      "Cobertura proyección %": 64.9,
+      "Precisión proyección %": 64.3,
+      "Cobertura modelo %": 74.2,
+      "Precisión modelo %": 59.0
+    },
+    {
+      "escenario": "5 años de historia",
+      "casos": 97,
+      "AUC proyección": 0.803,
+      "AUC modelo": 0.925,
+      "Cobertura proyección %": 67.0,
+      "Precisión proyección %": 66.3,
+      "Cobertura modelo %": 74.2,
+      "Precisión modelo %": 59.0
+    },
+    {
+      "escenario": "Umbral de subejecución 85%",
+      "casos": 60,
+      "AUC proyección": 0.747,
+      "AUC modelo": 0.943,
+      "Cobertura proyección %": 58.3,
+      "Precisión proyección %": 51.5,
+      "Cobertura modelo %": 56.7,
+      "Precisión modelo %": 63.0
+    },
+    {
+      "escenario": "Umbral de subejecución 95%",
+      "casos": 158,
+      "AUC proyección": 0.798,
+      "AUC modelo": 0.913,
+      "Cobertura proyección %": 65.8,
+      "Precisión proyección %": 73.8,
+      "Cobertura modelo %": 82.9,
+      "Precisión modelo %": 65.5
+    },
+    {
+      "escenario": "Regularización más fuerte (x5)",
+      "casos": 97,
+      "AUC proyección": 0.804,
+      "AUC modelo": 0.925,
+      "Cobertura proyección %": 63.9,
+      "Precisión proyección %": 62.0,
+      "Cobertura modelo %": 76.3,
+      "Precisión modelo %": 59.7
+    },
+    {
+      "escenario": "Sin regularización",
+      "casos": 97,
+      "AUC proyección": 0.804,
+      "AUC modelo": 0.925,
+      "Cobertura proyección %": 63.9,
+      "Precisión proyección %": 62.0,
+      "Cobertura modelo %": 74.2,
+      "Precisión modelo %": 59.5
+    }
+  ],
+  "no_ayudaron": [
+    {
+      "variante": "Proyección simple",
+      "tramo": "ajuste",
+      "error_pp": 4.1,
+      "auc": 0.759
+    },
+    {
+      "variante": "Proyección simple",
+      "tramo": "prueba",
+      "error_pp": 4.7,
+      "auc": 0.804
+    },
+    {
+      "variante": "Ignorando 2020-2021 en la historia",
+      "tramo": "ajuste",
+      "error_pp": 4.7,
+      "auc": 0.746
+    },
+    {
+      "variante": "Ignorando 2020-2021 en la historia",
+      "tramo": "prueba",
+      "error_pp": 5.0,
+      "auc": 0.805
+    },
+    {
+      "variante": "Por tipo de gasto",
+      "tramo": "ajuste",
+      "error_pp": 5.3,
+      "auc": 0.698
+    },
+    {
+      "variante": "Por tipo de gasto",
+      "tramo": "prueba",
+      "error_pp": 6.6,
+      "auc": 0.757
+    }
+  ],
+  "actual": {
+    "año": 2026,
+    "alertas": 32,
+    "sin_ejecutar_MM": 1576951.0,
+    "instituciones": 253
+  }
+}

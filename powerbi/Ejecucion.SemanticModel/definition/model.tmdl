@@ -12,7 +12,9 @@ ref table Ejercicio
 ref table Meses
 ref table Proyeccion
 ref table Alertas
-ref table Validacion
+ref table Comparacion
+ref table Curva
+ref table Calibracion
 ref table Brecha
 ref table Medidas
 

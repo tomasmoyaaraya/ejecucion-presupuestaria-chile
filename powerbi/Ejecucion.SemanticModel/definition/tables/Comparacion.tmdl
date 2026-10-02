@@ -1,0 +1,41 @@
+table Comparacion
+
+	column metodo
+		dataType: string
+		summarizeBy: none
+		sourceColumn: metodo
+
+	column alertas
+		dataType: int64
+		formatString: #,0
+		summarizeBy: sum
+		sourceColumn: alertas
+
+	column aciertos
+		dataType: int64
+		formatString: #,0
+		summarizeBy: sum
+		sourceColumn: aciertos
+
+	column precision
+		dataType: double
+		formatString: 0.0%
+		summarizeBy: sum
+		sourceColumn: precision
+
+	column cobertura
+		dataType: double
+		formatString: 0.0%
+		summarizeBy: sum
+		sourceColumn: cobertura
+
+	partition Comparacion = m
+		mode: import
+		source =
+				let
+				    Origen = Csv.Document(File.Contents(CarpetaDatos & "\comparacion.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Encabezados = Table.PromoteHeaders(Origen, [PromoteAllScalars=true]),
+				    Tipos = Table.TransformColumnTypes(Encabezados, {{"metodo", type text}, {"alertas", Int64.Type}, {"aciertos", Int64.Type}, {"precision", type number}, {"cobertura", type number}}, "en-US")
+				in
+				    Tipos
+

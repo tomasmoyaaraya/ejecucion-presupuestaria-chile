@@ -3,10 +3,10 @@
   "name": "nota",
   "position": {
     "x": 20,
-    "y": 610,
+    "y": 612,
     "z": 0,
     "width": 1240,
-    "height": 80
+    "height": 100
   },
   "visual": {
     "visualType": "textbox",
@@ -18,7 +18,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Regla simple de comparación (alertar a quien ya cerró bajo 90% el año anterior): detecta menos casos y con menor precisión. 2020 y 2021 (pandemia) se muestran pero no entran en el resumen. La cifra oficial (~99% de ejecución) se mide contra el presupuesto final, que se recorta después del corte a quienes no alcanzan a gastar.",
+                    "value": "Ajustado con 2019-2022 y probado en 2023-2025, que no se usaron para elegir nada. Con pocas alertas la proyección simple es igual o mejor; el modelo gana cuando se revisan más instituciones. En los niveles altos el modelo se pasa de optimista (decía 96% y acertó 74%), por eso se muestran niveles y no probabilidades. La cifra oficial (~99%) se mide contra el presupuesto final, recortado después del corte.",
                     "textStyle": {
                       "fontSize": "10pt",
                       "fontWeight": "normal",

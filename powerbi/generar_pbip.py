@@ -8,6 +8,7 @@ La curva de ejecución y los KPIs se calculan en DAX sobre los hechos mensuales;
 institución y la validación vienen precalculadas desde Python (mismas cifras que el tablero web).
 """
 import json
+import re
 import shutil
 import sqlite3
 import sys
@@ -54,19 +55,32 @@ def exportar_csv():
     act.insert(0, "inst_id", iid(act))
     act[["inst_id", "vig_corte", "ejec_corte", "proy_patron", "avance_tipico", "pct_proy", "alerta",
          "sin_ejecutar_proy"]].to_csv(DATOS / "proyeccion.csv", index=False)
-    al = act[act.alerta]
+    # Alertas: vienen del modelo de riesgo (mejoras.py)
+    riesgo = pd.read_csv(BASE / "datos" / "riesgo.csv")
+    al = riesgo[riesgo.alerta].copy()
     prev = ia[ia.año < año].sort_values("año").groupby(A.K).pct_final.apply(
         lambda s: " · ".join(f"{int(round(v * 100, 1) + 0.5)}%" for v in s.tail(3)))  # redondeo igual al tablero web
-    al = al.assign(años_previos=[prev.get((p, c), "nueva") for p, c in zip(al.partida, al.capitulo)])
-    al[["inst_id", "vig_corte", "ejec_corte", "pct_proy", "sin_ejecutar_proy", "años_previos"]].to_csv(
-        DATOS / "alertas.csv", index=False)
-    val, _ = A.validar(ia, corte)
-    val.rename(columns={"Año": "año", "Instituciones": "instituciones", "Cerraron bajo 90%": "cerraron_bajo",
-                        "Alertas": "alertas", "Aciertos": "aciertos", "Falsas alarmas": "falsas",
-                        "No detectadas": "no_detectadas", "Error patrón (pp)": "error_pp", "Error lineal (pp)": "error_lineal_pp",
-                        "Atípico": "atipico"}).drop(columns=["Precisión %", "Cobertura %"]).assign(
-        pandemia=lambda d: d.atipico.map({True: "Sí", False: ""})).to_csv(
-        DATOS / "validacion.csv", index=False)
+    al["años_previos"] = [prev.get((p, c), "nueva") for p, c in zip(al.partida, al.capitulo)]
+    causas = al.causa.fillna("").str.split(" · ")
+    corta = lambda s: re.sub(r", ejecutado \d+%", "", s) if isinstance(s, str) else ""
+    al["causa_1"] = causas.str[0].map(corta)
+    al["causa_2"] = causas.str[1].fillna("").map(corta)
+    al["nivel_orden"] = al.nivel.map({"Moderado": 1, "Alto": 2, "Muy alto": 3})
+    al = al.rename(columns={"sin_ejecutar": "sin_ejecutar_proy", "pct_proy": "pct_proy_alerta"})
+    al = al.assign(pct_proy=al.pct_proy_alerta)
+    al[["inst_id", "vig_corte", "ejec_corte", "pct_proy", "sin_ejecutar_proy", "años_previos", "nivel", "nivel_orden",
+        "causa_1", "causa_2"]].to_csv(DATOS / "alertas.csv", index=False)
+    mj = json.loads((BASE / "resultados" / "mejoras.json").read_text(encoding="utf-8"))
+    pd.DataFrame([{"metodo": n, **{k: (mj[c][k] / 100 if k in ("precision", "cobertura", "f1") else mj[c][k])
+                                   for k in ("alertas", "aciertos", "precision", "cobertura")}}
+                  for n, c in (("Regla simple", "regla"), ("Proyección simple", "proyeccion"), ("Modelo de riesgo", "modelo"))]
+                 ).to_csv(DATOS / "comparacion.csv", index=False)
+    pd.DataFrame([{"n": int(n), "etiqueta": f"{int(n)} alertas", "proyeccion": v["proyeccion"], "modelo": v["modelo"]}
+                  for n, v in mj["curva"].items()]
+                 ).to_csv(DATOS / "curva.csv", index=False)
+    pd.DataFrame([{"orden": i, "tramo": c["tramo"], "instituciones": c["instituciones"],
+                   "prob_media": (c["prob_media"] or 0) / 100, "cerraron_bajo": (c["cerraron_bajo"] or 0) / 100}
+                  for i, c in enumerate(mj["calibracion"], 1)]).to_csv(DATOS / "calibracion.csv", index=False)
     ok = ia[ia.vig_corte > A.MIN_PRESUPUESTO]
     (ok.assign(corte=ok.pct_final < A.UMBRAL_SUBEJECUCION, oficial=ok.pct_oficial < A.UMBRAL_SUBEJECUCION)
      .groupby("año")[["oficial", "corte"]].mean().reset_index().assign(periodo=lambda d: d.año.astype(str))
@@ -171,12 +185,10 @@ MEDIDAS = [
     ("Cierre Proyectado Alerta %", "DIVIDE(SUMX(Alertas, Alertas[pct_proy] * Alertas[vig_corte]), SUM(Alertas[vig_corte]))", PCT, "4 Proyección"),
     ("Color Alerta", f'"{ROJO}"', "", "4 Proyección"),
     ("Color Cierre", f'IF([Cierre Proyectado %] < {A.UMBRAL_SUBEJECUCION}, "{ROJO}", "{TINTA}")', "", "4 Proyección"),
-    # --- validación (años normales, sin pandemia)
-    ("Precisión", "DIVIDE(CALCULATE(SUM(Validacion[aciertos]), Validacion[atipico] = FALSE()), "
-                  "CALCULATE(SUM(Validacion[alertas]), Validacion[atipico] = FALSE()))", PCT, "5 Validación"),
-    ("Cobertura", "DIVIDE(CALCULATE(SUM(Validacion[aciertos]), Validacion[atipico] = FALSE()), "
-                  "CALCULATE(SUM(Validacion[cerraron_bajo]), Validacion[atipico] = FALSE()))", PCT, "5 Validación"),
-    ("Error Típico (pp)", "CALCULATE(MEDIAN(Validacion[error_pp]), Validacion[atipico] = FALSE())", "0.0", "5 Validación"),
+    # --- validación en los años de prueba
+    ("Cobertura Modelo", 'CALCULATE(SUM(Comparacion[cobertura]), Comparacion[metodo] = "Modelo de riesgo")', PCT, "5 Validación"),
+    ("Precisión Modelo", 'CALCULATE(SUM(Comparacion[precision]), Comparacion[metodo] = "Modelo de riesgo")', PCT, "5 Validación"),
+    ("Cobertura Proyección Simple", 'CALCULATE(SUM(Comparacion[cobertura]), Comparacion[metodo] = "Proyección simple")', PCT, "5 Validación"),
     ("% Bajo 90% (oficial)", "SUM(Brecha[oficial])", PCT, "5 Validación"),
     ("% Bajo 90% (al corte)", "SUM(Brecha[corte])", PCT, "5 Validación"),
 ]
@@ -187,7 +199,8 @@ def generar_modelo():
     (defn / "tables").mkdir(parents=True, exist_ok=True)
     (SM / "definition.pbism").write_text(json.dumps({"version": "4.0", "settings": {}}, indent=2), encoding="utf-8")
     (defn / "database.tmdl").write_text("database\n\tcompatibilityLevel: 1606\n", encoding="utf-8")
-    tablas = ["Hechos", "Instituciones", "Ejercicio", "Meses", "Proyeccion", "Alertas", "Validacion", "Brecha", "Medidas"]
+    tablas = ["Hechos", "Instituciones", "Ejercicio", "Meses", "Proyeccion", "Alertas", "Comparacion", "Curva", "Calibracion",
+              "Brecha", "Medidas"]
     (defn / "model.tmdl").write_text(
         "model Model\n\tculture: es-CL\n\tdefaultPowerBIDataSourceVersion: powerBI_V3\n\tsourceQueryCulture: es-CL\n"
         "\tdataAccessOptions\n\t\tlegacyRedirects\n\t\treturnErrorValuesAsNull\n\n"
@@ -223,19 +236,24 @@ def generar_modelo():
                                                      ("sin_ejecutar_proy", N)])),
         "Alertas": tabla("Alertas", [("inst_id", "int64", "0", True), ("vig_corte", "double", "#,0", False, "sum"),
                                      ("ejec_corte", "double", "#,0", False, "sum"), ("pct_proy", "double", PCT),
-                                     ("sin_ejecutar_proy", "double", "#,0", False, "sum"), ("años_previos", "string")],
+                                     ("sin_ejecutar_proy", "double", "#,0", False, "sum"), ("años_previos", "string"),
+                                     {"nombre": "nivel", "tipo": "string", "sort_by": "nivel_orden"},
+                                     ("nivel_orden", "int64", "0", True), ("causa_1", "string"), ("causa_2", "string")],
                          m_csv("alertas.csv", [("inst_id", I), ("vig_corte", N), ("ejec_corte", N), ("pct_proy", N),
-                                               ("sin_ejecutar_proy", N), ("años_previos", X)])),
-        "Validacion": tabla("Validacion", [("año", "int64", "0"), ("instituciones", "int64", "#,0", False, "sum"),
-                                           ("cerraron_bajo", "int64", "#,0", False, "sum"), ("alertas", "int64", "#,0", False, "sum"),
-                                           ("aciertos", "int64", "#,0", False, "sum"), ("falsas", "int64", "#,0", False, "sum"),
-                                           ("no_detectadas", "int64", "#,0", False, "sum"), ("error_pp", "double", "0.0", False, "sum"),
-                                           ("error_lineal_pp", "double", "0.0", False, "sum"), ("atipico", "boolean"),
-                                           ("pandemia", "string")],
-                            m_csv("validacion.csv", [("año", I), ("instituciones", I), ("cerraron_bajo", I), ("alertas", I),
-                                                     ("aciertos", I), ("falsas", I), ("no_detectadas", I), ("error_pp", N),
-                                                     ("error_lineal_pp", N), ("atipico", "type logical"),
-                                                     ("pandemia", X)])),
+                                               ("sin_ejecutar_proy", N), ("años_previos", X), ("nivel", X), ("nivel_orden", I),
+                                               ("causa_1", X), ("causa_2", X)])),
+        "Comparacion": tabla("Comparacion", [("metodo", "string"), ("alertas", "int64", "#,0", False, "sum"),
+                                             ("aciertos", "int64", "#,0", False, "sum"), ("precision", "double", PCT, False, "sum"),
+                                             ("cobertura", "double", PCT, False, "sum")],
+                             m_csv("comparacion.csv", [("metodo", X), ("alertas", I), ("aciertos", I), ("precision", N), ("cobertura", N)])),
+        "Curva": tabla("Curva", [("n", "int64", "0", True), {"nombre": "etiqueta", "tipo": "string", "sort_by": "n"},
+                                 ("proyeccion", "int64", "#,0", False, "sum"),
+                                 ("modelo", "int64", "#,0", False, "sum")],
+                       m_csv("curva.csv", [("n", I), ("etiqueta", X), ("proyeccion", I), ("modelo", I)])),
+        "Calibracion": tabla("Calibracion", [("orden", "int64", "0", True), {"nombre": "tramo", "tipo": "string", "sort_by": "orden"},
+                                             ("instituciones", "int64", "#,0", False, "sum"),
+                                             ("prob_media", "double", "0%", False, "sum"), ("cerraron_bajo", "double", "0%", False, "sum")],
+                             m_csv("calibracion.csv", [("orden", I), ("tramo", X), ("instituciones", I), ("prob_media", N), ("cerraron_bajo", N)])),
         "Brecha": tabla("Brecha", [("año", "int64", "0", True), ("oficial", "double", PCT), ("corte", "double", PCT),
                                    {"nombre": "periodo", "tipo": "string", "sort_by": "año"}],
                         m_csv("brecha.csv", [("año", I), ("oficial", N), ("corte", N), ("periodo", X)])),
@@ -411,33 +429,43 @@ def paginas(año, corte, n_alertas, riesgo):
         "Ejecución por ministerio")), "Cierre Proyectado %", "Color Cierre"), tam=8)
     ordenar(tmin, "Medidas", "Vigente (bn)")
 
-    t_alertas = tabla_limpia(visual("tAlertas", "tableEx", (20, 130, 900, 580),
+    t_alertas = tabla_limpia(visual("tAlertas", "tableEx", (20, 130, 980, 580),
         {"Values": [campo("Instituciones", "institucion", nombre="Institución"),
-                    suma("Alertas", "vig_corte", "Vigente MM$"),
+                    campo("Alertas", "nivel", nombre="Riesgo"),
                     campo("Medidas", "% Ejecutado Alerta", True, "Ejecutado"),
                     campo("Medidas", "Cierre Proyectado Alerta %", True, "Cierre proy."),
                     suma("Alertas", "sin_ejecutar_proy", "Sin gastar MM$"),
-                    campo("Alertas", "años_previos", nombre="Años previos")]},
-        "Instituciones con cierre proyectado bajo 90% del presupuesto vigente"), tam=8)
+                    campo("Alertas", "años_previos", nombre="Años previos"),
+                    campo("Alertas", "causa_1", nombre="Qué explica el atraso")]},
+        "Instituciones con riesgo de no ejecutar su presupuesto"), tam=8)
     ordenar(t_alertas, "Alertas", "sin_ejecutar_proy", medida=False, agregado=True)
     color_condicional(t_alertas, "Cierre Proyectado Alerta %", "Color Alerta")
-    riesgo_min = ejes_limpios(colores_series(visual("gRiesgo", "clusteredBarChart", (940, 130, 320, 580),
+    riesgo_min = ejes_limpios(colores_series(visual("gRiesgo", "clusteredBarChart", (1020, 130, 240, 580),
         {"Category": [campo("Instituciones", "ministerio_corto")], "Y": [campo("Medidas", "Monto en Riesgo", True)]},
-        "Monto en riesgo por ministerio (MM$)"), {"Monto en Riesgo": ROJO}), tam_cat=8)
+        "Monto en riesgo por ministerio"), {"Monto en Riesgo": ROJO}), tam_cat=8)
     ordenar(riesgo_min, "Medidas", "Monto en Riesgo")
     riesgo_min["visual"]["objects"]["labels"] = [{"properties": {"show": lit("true"), "fontSize": lit("8D")}}]
 
-    t_val = tabla_limpia(sin_totales(visual("tVal", "tableEx", (20, 200, 600, 390),
-        {"Values": [campo("Validacion", "año", nombre="Año"), suma("Validacion", "cerraron_bajo", "Cerraron bajo 90%"),
-                    suma("Validacion", "alertas", "Alertas"), suma("Validacion", "aciertos", "Aciertos"),
-                    suma("Validacion", "falsas", "Falsas alarmas"), suma("Validacion", "no_detectadas", "No detectadas"),
-                    suma("Validacion", "error_pp", "Error (pp)"), campo("Validacion", "pandemia", nombre="Pandemia")]},
-        f"Proyección hecha cada año en {mes} con los años anteriores, contra el cierre real")))
-    brecha = ejes_limpios(colores_series(visual("gBrecha", "clusteredColumnChart", (660, 200, 600, 390),
+    t_comp = tabla_limpia(sin_totales(visual("tComp", "tableEx", (20, 190, 610, 150),
+        {"Values": [campo("Comparacion", "metodo", nombre="Método"), suma("Comparacion", "alertas", "Alertas"),
+                    suma("Comparacion", "aciertos", "Aciertos"), suma("Comparacion", "precision", "Precisión"),
+                    suma("Comparacion", "cobertura", "Cobertura")]},
+        "Resultados en los años de prueba (2023-2025)")), tam=9)
+    curva_n = ejes_limpios(colores_series(visual("gCurvaN", "clusteredColumnChart", (20, 350, 610, 255),
+        {"Category": [campo("Curva", "etiqueta", nombre="Alertas revisadas")],
+         "Y": [suma("Curva", "proyeccion", "Proyección simple"), suma("Curva", "modelo", "Modelo de riesgo")]},
+        "Casos encontrados (de 97) según las alertas revisadas"), {}), tam_cat=9)
+    curva_n["visual"]["objects"]["dataPoint"] = []
+    curva_n["visual"]["objects"]["labels"] = [{"properties": {"show": lit("true"), "fontSize": lit("9D")}}]
+    t_cal = tabla_limpia(sin_totales(visual("tCal", "tableEx", (650, 190, 610, 150),
+        {"Values": [campo("Calibracion", "tramo", nombre="Nivel de riesgo"), suma("Calibracion", "instituciones", "Instituciones"),
+                    suma("Calibracion", "prob_media", "El modelo decía"), suma("Calibracion", "cerraron_bajo", "Terminó bajo 90%")]},
+        "Cuánto confiar en cada nivel de riesgo")), tam=9)
+    brecha = ejes_limpios(colores_series(visual("gBrecha", "clusteredColumnChart", (650, 350, 610, 255),
         {"Category": [campo("Brecha", "periodo", nombre="Año")],
          "Y": [campo("Medidas", "% Bajo 90% (oficial)", True, "vs vigente final (oficial)"),
                campo("Medidas", "% Bajo 90% (al corte)", True, f"vs presupuesto que tenía en {mes}")]},
-        "Instituciones que cerraron bajo 90%: depende contra qué presupuesto se mida"),
+        "Instituciones bajo 90%: depende contra qué presupuesto se mida"),
         {"% Bajo 90% (oficial)": GRIS_PL, "% Bajo 90% (al corte)": GRIS_AC}))
 
     return {
@@ -460,16 +488,16 @@ def paginas(año, corte, n_alertas, riesgo):
             t_alertas, riesgo_min,
         ]),
         "validacion": ("Validación", [
-            encabezado("¿La proyección acierta?"),
-            tarjeta("kCob", "Cobertura", 20, "Casos detectados (años normales)", y=80, w=300),
-            tarjeta("kPrec", "Precisión", 340, "Alertas correctas (años normales)", y=80, w=300),
-            tarjeta("kErr", "Error Típico (pp)", 660, "Error típico del cierre (pp)", y=80, w=300),
-            t_val, brecha,
-            texto("nota", (20, 610, 1240, 80), [(
-                "Regla simple de comparación (alertar a quien ya cerró bajo 90% el año anterior): detecta menos casos y con menor "
-                "precisión. 2020 y 2021 (pandemia) se muestran pero no entran en el resumen. La cifra oficial (~99% de ejecución) "
-                "se mide contra el presupuesto final, que se recorta después del corte a quienes no alcanzan a gastar.",
-                10, False, SUAVE)]),
+            encabezado("¿El modelo acierta?"),
+            tarjeta("kCob", "Cobertura Modelo", 20, "Casos detectados (modelo)", y=76, w=300),
+            tarjeta("kPrec", "Precisión Modelo", 340, "Alertas correctas (modelo)", y=76, w=300),
+            tarjeta("kCobP", "Cobertura Proyección Simple", 660, "Casos detectados (proyección simple)", y=76, w=300),
+            t_comp, curva_n, t_cal, brecha,
+            texto("nota", (20, 612, 1240, 100), [(
+                "Ajustado con 2019-2022 y probado en 2023-2025, que no se usaron para elegir nada. Con pocas alertas la proyección simple "
+                "es igual o mejor; el modelo gana cuando se revisan más instituciones. En los niveles altos el modelo se pasa de optimista "
+                "(decía 96% y acertó 74%), por eso se muestran niveles y no probabilidades. La cifra oficial (~99%) se mide contra el "
+                "presupuesto final, recortado después del corte.", 10, False, SUAVE)]),
         ]),
     }
 

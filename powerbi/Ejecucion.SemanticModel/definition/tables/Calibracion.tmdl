@@ -1,0 +1,43 @@
+table Calibracion
+
+	column orden
+		dataType: int64
+		formatString: 0
+		isHidden
+		summarizeBy: none
+		sourceColumn: orden
+
+	column tramo
+		dataType: string
+		sortByColumn: orden
+		summarizeBy: none
+		sourceColumn: tramo
+
+	column instituciones
+		dataType: int64
+		formatString: #,0
+		summarizeBy: sum
+		sourceColumn: instituciones
+
+	column prob_media
+		dataType: double
+		formatString: 0%
+		summarizeBy: sum
+		sourceColumn: prob_media
+
+	column cerraron_bajo
+		dataType: double
+		formatString: 0%
+		summarizeBy: sum
+		sourceColumn: cerraron_bajo
+
+	partition Calibracion = m
+		mode: import
+		source =
+				let
+				    Origen = Csv.Document(File.Contents(CarpetaDatos & "\calibracion.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Encabezados = Table.PromoteHeaders(Origen, [PromoteAllScalars=true]),
+				    Tipos = Table.TransformColumnTypes(Encabezados, {{"orden", Int64.Type}, {"tramo", type text}, {"instituciones", Int64.Type}, {"prob_media", type number}, {"cerraron_bajo", type number}}, "en-US")
+				in
+				    Tipos
+

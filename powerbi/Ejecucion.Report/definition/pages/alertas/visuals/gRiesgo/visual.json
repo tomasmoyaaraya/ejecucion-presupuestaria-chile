@@ -2,10 +2,10 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
   "name": "gRiesgo",
   "position": {
-    "x": 940,
+    "x": 1020,
     "y": 130,
     "z": 0,
-    "width": 320,
+    "width": 240,
     "height": 580
   },
   "visual": {
@@ -83,7 +83,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Monto en riesgo por ministerio (MM$)'"
+                  "Value": "'Monto en riesgo por ministerio'"
                 }
               }
             }
