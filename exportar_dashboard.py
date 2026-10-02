@@ -70,7 +70,7 @@ def kpis(m: pd.DataFrame, actual: pd.DataFrame, ia: pd.DataFrame, año: int, cor
     h = ia[(ia.año < año) & ~ia.año.isin(A.AÑOS_ATIPICOS)]
     if grupo is not None:
         t, h = t[t.partida == int(grupo)], h[h.partida == int(grupo)]
-    hist = h.groupby("año").apply(lambda g: g.ejec_corte.sum() / g.vig_corte.sum(), include_groups=False).median()
+    hist = h.groupby("año").apply(lambda g: g.ejec_corte.sum() / g.vig_corte.sum() if g.vig_corte.sum() else np.nan, include_groups=False).median()
     al = a[a.alerta]
     return {
         "vigente": r(t.ley_vigente.sum(), 0), "inicial": r(t.ley_inicial.sum(), 0), "ejecutado": r(t.ejec_acum.sum(), 0),
@@ -96,7 +96,7 @@ def main():
 
     # Tabla por ministerio: avance al corte vs su avance típico, cierre proyectado y alertas
     h = ia[(ia.año < año) & ~ia.año.isin(A.AÑOS_ATIPICOS) & (ia.vig_corte > A.MIN_PRESUPUESTO)]
-    hist_min = (h.groupby(["año", "partida"]).apply(lambda g: g.ejec_corte.sum() / g.vig_corte.sum(), include_groups=False)
+    hist_min = (h.groupby(["año", "partida"]).apply(lambda g: g.ejec_corte.sum() / g.vig_corte.sum() if g.vig_corte.sum() else np.nan, include_groups=False)
                 .groupby("partida").median())
     tmin = actual.groupby(["partida", "ministerio"]).agg(
         vigente=("vig_corte", "sum"), ejecutado=("ejec_corte", "sum"), proy=("proy_patron", "sum"),
