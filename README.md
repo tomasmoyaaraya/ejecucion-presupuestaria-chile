@@ -107,7 +107,7 @@ ocurre en diciembre.
   presupuesto para entrar en el análisis. Los definí antes de correr la validación y no probé otras combinaciones
   para mejorar el resultado, pero son decisiones mías.
 - **Las instituciones nuevas o reestructuradas no tienen historia propia** (por ejemplo, el Ministerio de Seguridad
-  Pública, creado en 2025): para ellas se usa el ritmo típico de todo el Estado, que es menos preciso.
+  Pública, que aparece en los datos recién desde 2025): para ellas se usa el ritmo típico de todo el Estado, que es menos preciso.
 - **2020 y 2021 se excluyen del resumen** por la pandemia (fondos de emergencia, gasto atípico). Sus resultados se
   muestran igual en la tabla de validación.
 - **Montos en pesos nominales**, sin ajustar por inflación, y sin los presupuestos en dólares (menos del 3% de los registros).

@@ -102,6 +102,9 @@ table Medidas
 		formatString: 0.0%
 		displayFolder: 4 Proyección
 
+	measure 'Color Alerta' = "#D6453D"
+		displayFolder: 4 Proyección
+
 	measure 'Color Cierre' = IF([Cierre Proyectado %] < 0.9, "#D6453D", "#1A1A1A")
 		displayFolder: 4 Proyección
 

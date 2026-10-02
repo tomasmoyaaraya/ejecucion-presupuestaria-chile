@@ -169,6 +169,7 @@ MEDIDAS = [
     ("Monto en Riesgo (bn)", "DIVIDE([Monto en Riesgo], 1e6)", BN, "4 Proyección"),
     ("% Ejecutado Alerta", "DIVIDE(SUM(Alertas[ejec_corte]), SUM(Alertas[vig_corte]))", PCT, "4 Proyección"),
     ("Cierre Proyectado Alerta %", "DIVIDE(SUMX(Alertas, Alertas[pct_proy] * Alertas[vig_corte]), SUM(Alertas[vig_corte]))", PCT, "4 Proyección"),
+    ("Color Alerta", f'"{ROJO}"', "", "4 Proyección"),
     ("Color Cierre", f'IF([Cierre Proyectado %] < {A.UMBRAL_SUBEJECUCION}, "{ROJO}", "{TINTA}")', "", "4 Proyección"),
     # --- validación (años normales, sin pandemia)
     ("Precisión", "DIVIDE(CALCULATE(SUM(Validacion[aciertos]), Validacion[atipico] = FALSE()), "
@@ -419,8 +420,7 @@ def paginas(año, corte, n_alertas, riesgo):
                     campo("Alertas", "años_previos", nombre="Años previos")]},
         "Instituciones con cierre proyectado bajo 90% del presupuesto vigente"), tam=8)
     ordenar(t_alertas, "Alertas", "sin_ejecutar_proy", medida=False, agregado=True)
-    t_alertas["visual"]["objects"]["values"].append({
-        "properties": {"fontColor": color(ROJO)}, "selector": {"metadata": "Medidas.Cierre Proyectado Alerta %"}})
+    color_condicional(t_alertas, "Cierre Proyectado Alerta %", "Color Alerta")
     riesgo_min = ejes_limpios(colores_series(visual("gRiesgo", "clusteredBarChart", (940, 130, 320, 580),
         {"Category": [campo("Instituciones", "ministerio_corto")], "Y": [campo("Medidas", "Monto en Riesgo", True)]},
         "Monto en riesgo por ministerio (MM$)"), {"Monto en Riesgo": ROJO}), tam_cat=8)
